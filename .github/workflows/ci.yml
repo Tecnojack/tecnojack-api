@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17.10-bookworm
+        env:
+          POSTGRES_DB: tecnojack_test
+          POSTGRES_USER: tecnojack
+          POSTGRES_PASSWORD: tecnojack
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tecnojack -d tecnojack_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://tecnojack:tecnojack@localhost:5432/tecnojack_test?schema=public
+      JWT_SECRET: ci-secret-with-at-least-thirty-two-characters
+      LOG_LEVEL: fatal
+      LOG_PRETTY: 'false'
+      SWAGGER_ENABLED: 'false'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm prisma:generate
+
+      - name: Validate Prisma schema
+        run: pnpm prisma:validate
+
+      - name: Verify formatting
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test:cov
+
+      - name: Deploy migrations to test database
+        run: pnpm prisma:migrate:deploy
+
+      - name: Integration tests
+        run: pnpm test:integration
+
+      - name: End-to-end tests
+        run: pnpm test:e2e
+
+      - name: Production build
+        run: pnpm build
