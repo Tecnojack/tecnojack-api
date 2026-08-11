@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:24.19.0-bookworm-slim AS base
+FROM node:26.7.0-bookworm-slim AS base
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
@@ -21,7 +21,7 @@ COPY . .
 ENV DATABASE_URL=postgresql://build:build@localhost:5432/build?schema=public
 RUN pnpm prisma:generate && pnpm build && pnpm prune --prod
 
-FROM node:24.19.0-bookworm-slim AS production
+FROM node:26.7.0-bookworm-slim AS production
 ENV NODE_ENV=production
 WORKDIR /app
 RUN groupadd --system --gid 1001 nodejs && useradd --system --uid 1001 --gid nodejs tecnojack
