@@ -9,7 +9,7 @@ import { Person } from '../../../../domain/entities/person.entity.js';
 import { PersonName } from '../../../../domain/value-objects/person-name.value-object.js';
 import { Document } from '../../../../domain/value-objects/document.value-object.js';
 import { ContactInformation } from '../../../../domain/value-objects/contact-information.value-object.js';
-import { AuditInfo } from '../../../../../../shared/domain/value-objects/audit-info.value-object.js';
+import { AuditInfo } from '../../../../../../platform/domain/value-objects/audit-info.value-object.js';
 import type { DocumentType, PersonStatus, ContactType } from '../../../../domain/enums/people.enums.js';
 
 export type PrismaPersonWithContacts = PrismaPerson & {

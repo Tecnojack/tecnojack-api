@@ -1,11 +1,12 @@
-import { AuditInfo } from '../../../../shared/domain/value-objects/audit-info.value-object.js';
+import { AggregateRoot } from '../../../../platform/domain/entities/aggregate-root.js';
+import type { ISoftDeletable } from '../../../../platform/domain/interfaces/soft-deletable.interface.js';
+import { AuditInfo } from '../../../../platform/domain/value-objects/audit-info.value-object.js';
 import { PersonStatus } from '../enums/people.enums.js';
 import type { PersonName } from '../value-objects/person-name.value-object.js';
 import type { Document } from '../value-objects/document.value-object.js';
 import { ContactInformation } from '../value-objects/contact-information.value-object.js';
 import { PersonAlreadyDeletedException } from '../errors/people.errors.js';
 import {
-  type DomainEvent,
   PersonCreatedEvent,
   PersonUpdatedEvent,
   PersonArchivedEvent,
@@ -22,22 +23,22 @@ export interface PersonProps {
   audit?: AuditInfo;
 }
 
-export class Person {
-  private readonly _id: string;
+export class Person extends AggregateRoot<string> implements ISoftDeletable {
   private readonly _code: string;
   private _name: PersonName;
   private _document: Document | null;
   private _status: PersonStatus;
   private _contactPoints: ContactInformation[];
   private _audit: AuditInfo;
-  private _domainEvents: DomainEvent[] = [];
 
   constructor(props: PersonProps) {
     if (!props.code || props.code.trim().length === 0) {
       throw new Error('Person code cannot be empty.');
     }
 
-    this._id = props.id ?? crypto.randomUUID();
+    const id = props.id ?? crypto.randomUUID();
+    super(id);
+
     this._code = props.code.trim();
     this._name = props.name;
     this._document = props.document ?? null;
@@ -66,10 +67,6 @@ export class Person {
     return person;
   }
 
-  get id(): string {
-    return this._id;
-  }
-
   get code(): string {
     return this._code;
   }
@@ -94,16 +91,8 @@ export class Person {
     return this._audit;
   }
 
-  get domainEvents(): readonly DomainEvent[] {
-    return this._domainEvents;
-  }
-
-  clearDomainEvents(): void {
-    this._domainEvents = [];
-  }
-
-  private addDomainEvent(event: DomainEvent): void {
-    this._domainEvents.push(event);
+  isDeleted(): boolean {
+    return this._audit.isDeleted();
   }
 
   updateName(name: PersonName, actorId?: string): void {
@@ -113,7 +102,7 @@ export class Person {
 
     this.addDomainEvent(
       new PersonUpdatedEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         updatedFields: ['name'],
         updatedBy: actorId ?? null,
@@ -128,7 +117,7 @@ export class Person {
 
     this.addDomainEvent(
       new PersonUpdatedEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         updatedFields: ['document'],
         updatedBy: actorId ?? null,
@@ -145,7 +134,7 @@ export class Person {
 
     this.addDomainEvent(
       new PersonUpdatedEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         updatedFields: ['status'],
         updatedBy: actorId ?? null,
@@ -156,7 +145,6 @@ export class Person {
   addContactPoint(contact: ContactInformation, actorId?: string): void {
     this.ensureNotDeleted();
 
-    // If new contact is primary for its type, unset previous primary of same type
     if (contact.isPrimary) {
       this._contactPoints = this._contactPoints.map((c) =>
         c.type === contact.type
@@ -171,7 +159,6 @@ export class Person {
       );
     }
 
-    // Replace if exact match, otherwise append
     const existingIndex = this._contactPoints.findIndex((c) => c.equals(contact));
     if (existingIndex >= 0) {
       this._contactPoints[existingIndex] = contact;
@@ -182,7 +169,7 @@ export class Person {
     this._audit = this._audit.touch(actorId);
     this.addDomainEvent(
       new PersonUpdatedEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         updatedFields: ['contactPoints'],
         updatedBy: actorId ?? null,
@@ -199,7 +186,7 @@ export class Person {
       this._audit = this._audit.touch(actorId);
       this.addDomainEvent(
         new PersonUpdatedEvent({
-          personId: this._id,
+          personId: this.id,
           code: this._code,
           updatedFields: ['contactPoints'],
           updatedBy: actorId ?? null,
@@ -210,13 +197,13 @@ export class Person {
 
   softDelete(actorId?: string): void {
     if (this._audit.isDeleted()) {
-      throw new PersonAlreadyDeletedException(this._id);
+      throw new PersonAlreadyDeletedException(this.id);
     }
 
     this._audit = this._audit.softDelete(actorId);
     this.addDomainEvent(
       new PersonArchivedEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         deletedAt: this._audit.deletedAt!,
         deletedBy: actorId ?? null,
@@ -230,7 +217,7 @@ export class Person {
     this._audit = this._audit.restore(actorId);
     this.addDomainEvent(
       new PersonRestoredEvent({
-        personId: this._id,
+        personId: this.id,
         code: this._code,
         restoredAt: new Date(),
         restoredBy: actorId ?? null,
@@ -240,7 +227,7 @@ export class Person {
 
   private ensureNotDeleted(): void {
     if (this._audit.isDeleted()) {
-      throw new PersonAlreadyDeletedException(this._id);
+      throw new PersonAlreadyDeletedException(this.id);
     }
   }
 }

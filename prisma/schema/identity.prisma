@@ -1,0 +1,126 @@
+model UserModel {
+  id               String   @id @default(uuid())
+  code             String   @unique // USR-XXXXXX
+  email            String   @unique
+  passwordHash     String
+  status           String   // EnumUserStatus: ACTIVE, SUSPENDED, LOCKED, UNVERIFIED
+  isEmailVerified  Boolean  @default(false)
+  roleIds          String[]
+  claimsJson       String?  // Array of claims as JSON
+  providersJson    String?  // AuthProviders list as JSON
+  tenantId         String?
+
+  // Audit Info
+  createdAt        DateTime @default(now())
+  createdBy        String?
+  updatedAt        DateTime @updatedAt
+  updatedBy        String?
+  deletedAt        DateTime?
+  deletedBy        String?
+
+  sessions         SessionModel[]
+  apiKeys          APIKeyModel[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model RoleModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // ROL-XXXXXX
+  name           String   @unique
+  description    String?
+  permissionIds  String[]
+  tenantId       String?
+
+  // Audit Info
+  createdAt      DateTime @default(now())
+  createdBy      String?
+  updatedAt      DateTime @updatedAt
+  updatedBy      String?
+  deletedAt      DateTime?
+  deletedBy      String?
+
+  @@map("roles")
+}
+
+model PermissionModel {
+  id          String   @id @default(uuid())
+  code        String   @unique // PRM-XXXXXX
+  resource    String
+  action      String
+  description String
+
+  @@unique([resource, action])
+  @@map("permissions")
+}
+
+model PolicyModel {
+  id        String   @id @default(uuid())
+  code      String   @unique // POL-XXXXXX
+  name      String   @unique
+  rulesJson String   // Serialized rules and conditions
+  tenantId  String?
+
+  // Audit Info
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+  deletedAt DateTime?
+  deletedBy String?
+
+  @@map("policies")
+}
+
+model SessionModel {
+  id               String   @id @default(uuid())
+  code             String   @unique // SES-XXXXXX
+  userId           String
+  refreshTokenHash String   @unique
+  ipAddress        String
+  userAgent        String
+  deviceType       String
+  expiresAt        DateTime
+  isRevoked        Boolean  @default(false)
+  tenantId         String?
+
+  // Audit Info
+  createdAt        DateTime @default(now())
+  createdBy        String?
+  updatedAt        DateTime @updatedAt
+  updatedBy        String?
+
+  user             UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([refreshTokenHash])
+  @@map("sessions")
+}
+
+model APIKeyModel {
+  id           String   @id @default(uuid())
+  code         String   @unique // APK-XXXXXX
+  userId       String
+  keyHash      String   @unique
+  name         String
+  scopes       String[]
+  expiresAt    DateTime
+  isActive     Boolean  @default(true)
+  tenantId     String?
+
+  // Audit Info
+  createdAt    DateTime @default(now())
+  createdBy    String?
+  updatedAt    DateTime @updatedAt
+  updatedBy    String?
+  deletedAt    DateTime?
+  deletedBy    String?
+
+  user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([keyHash])
+  @@map("api_keys")
+}

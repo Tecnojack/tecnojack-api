@@ -1,0 +1,12 @@
+export enum GalleryStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  UNPUBLISHED = 'UNPUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}
+
+export enum GalleryVisibility {
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
+  PASSWORD_PROTECTED = 'PASSWORD_PROTECTED',
+}

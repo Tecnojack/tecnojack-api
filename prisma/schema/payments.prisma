@@ -1,0 +1,130 @@
+enum PaymentStatus {
+  DRAFT
+  PENDING
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  REFUNDED
+  CANCELLED
+  ARCHIVED
+}
+
+enum PaymentPlan {
+  FULL_PAYMENT
+  INSTALLMENTS
+  MILESTONE_BASED
+  CUSTOM
+}
+
+enum InstallmentStatus {
+  PENDING
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  CREDIT_CARD
+  DEBIT_CARD
+  MANUAL_RECORD
+  EXTERNAL_ADAPTER
+  OTHER
+}
+
+enum TransactionType {
+  PAYMENT
+  PARTIAL_PAYMENT
+  REFUND
+  ADJUSTMENT
+}
+
+model PaymentModel {
+  id                    String                @id @default(uuid()) @db.Uuid
+  code                  String                @unique @db.VarChar(32)
+  title                 String                @db.VarChar(255)
+  description           String?               @db.Text
+  eventId               String                @map("event_id") @db.Uuid
+  contractId            String?               @map("contract_id") @db.Uuid
+  deliverableId         String?               @map("deliverable_id") @db.Uuid
+
+  payerPersonId         String?               @map("payer_person_id") @db.Uuid
+  payerOrganizationId   String?               @map("payer_organization_id") @db.Uuid
+
+  status                PaymentStatus         @default(DRAFT)
+  paymentPlan           PaymentPlan           @default(FULL_PAYMENT) @map("payment_plan")
+
+  totalAmount           Decimal               @default(0) @map("total_amount") @db.Decimal(12, 2)
+  paidAmount            Decimal               @default(0) @map("paid_amount") @db.Decimal(12, 2)
+  pendingAmount         Decimal               @default(0) @map("pending_amount") @db.Decimal(12, 2)
+  currency              String                @default("COP") @db.VarChar(3)
+
+  dueDate               DateTime?             @map("due_date")
+  completedAt           DateTime?             @map("completed_at")
+
+  createdAt             DateTime              @default(now()) @map("created_at")
+  createdBy             String?               @map("created_by") @db.Uuid
+  updatedAt             DateTime              @updatedAt @map("updated_at")
+  updatedBy             String?               @map("updated_by") @db.Uuid
+  deletedAt             DateTime?             @map("deleted_at")
+  deletedBy             String?               @map("deleted_by") @db.Uuid
+
+  installments          PaymentInstallmentModel[]
+  transactions          PaymentTransactionModel[]
+
+  @@index([code])
+  @@index([eventId])
+  @@index([contractId])
+  @@index([deliverableId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("payments")
+}
+
+model PaymentInstallmentModel {
+  id                 String                     @id @default(uuid()) @db.Uuid
+  paymentId          String                     @map("payment_id") @db.Uuid
+  installmentNumber  Int                        @map("installment_number")
+  title              String                     @db.VarChar(255)
+  amount             Decimal                    @map("amount") @db.Decimal(12, 2)
+  paidAmount         Decimal                    @default(0) @map("paid_amount") @db.Decimal(12, 2)
+  status             InstallmentStatus          @default(PENDING)
+  dueDate            DateTime                   @map("due_date")
+
+  createdAt          DateTime                   @default(now()) @map("created_at")
+  updatedAt          DateTime                   @updatedAt @map("updated_at")
+
+  payment            PaymentModel               @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  transactions       PaymentTransactionModel[]
+
+  @@unique([paymentId, installmentNumber])
+  @@index([paymentId])
+  @@index([status])
+  @@map("payment_installments")
+}
+
+model PaymentTransactionModel {
+  id               String                   @id @default(uuid()) @db.Uuid
+  paymentId        String                   @map("payment_id") @db.Uuid
+  installmentId    String?                  @map("installment_id") @db.Uuid
+  transactionType  TransactionType          @default(PAYMENT) @map("transaction_type")
+  paymentMethod    PaymentMethod            @default(CASH) @map("payment_method")
+  amount           Decimal                  @map("amount") @db.Decimal(12, 2)
+  referenceNumber  String?                  @map("reference_number") @db.VarChar(128)
+  notes            String?                  @db.Text
+  transactionDate  DateTime                 @default(now()) @map("transaction_date")
+  actorId          String?                  @map("actor_id") @db.Uuid
+
+  createdAt        DateTime                 @default(now()) @map("created_at")
+  updatedAt        DateTime                 @updatedAt @map("updated_at")
+
+  payment          PaymentModel             @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  installment      PaymentInstallmentModel? @relation(fields: [installmentId], references: [id], onDelete: SetNull)
+
+  @@index([paymentId])
+  @@index([installmentId])
+  @@index([transactionType])
+  @@map("payment_transactions")
+}

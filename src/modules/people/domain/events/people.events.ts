@@ -1,4 +1,5 @@
-import { type DomainEvent } from '../../../../shared/domain/events/domain-event.interface.js';
+import { BaseDomainEvent } from '../../../../platform/domain/events/base-domain-event.js';
+import type { DomainEvent } from '../../../../platform/domain/events/domain-event.interface.js';
 export type { DomainEvent };
 import type { PersonStatus, OrganizationStatus } from '../enums/people.enums.js';
 
@@ -11,18 +12,9 @@ export interface PersonCreatedPayload {
   createdBy?: string | null;
 }
 
-export class PersonCreatedEvent implements DomainEvent<PersonCreatedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.person.created';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: PersonCreatedPayload;
-
+export class PersonCreatedEvent extends BaseDomainEvent<PersonCreatedPayload> {
   constructor(payload: PersonCreatedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.personId;
-    this.payload = payload;
+    super('people.person.created', payload.personId, payload);
   }
 }
 
@@ -33,18 +25,9 @@ export interface PersonUpdatedPayload {
   updatedBy?: string | null;
 }
 
-export class PersonUpdatedEvent implements DomainEvent<PersonUpdatedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.person.updated';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: PersonUpdatedPayload;
-
+export class PersonUpdatedEvent extends BaseDomainEvent<PersonUpdatedPayload> {
   constructor(payload: PersonUpdatedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.personId;
-    this.payload = payload;
+    super('people.person.updated', payload.personId, payload);
   }
 }
 
@@ -55,18 +38,9 @@ export interface PersonArchivedPayload {
   deletedBy?: string | null;
 }
 
-export class PersonArchivedEvent implements DomainEvent<PersonArchivedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.person.archived';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: PersonArchivedPayload;
-
+export class PersonArchivedEvent extends BaseDomainEvent<PersonArchivedPayload> {
   constructor(payload: PersonArchivedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.personId;
-    this.payload = payload;
+    super('people.person.archived', payload.personId, payload);
   }
 }
 
@@ -77,18 +51,9 @@ export interface PersonRestoredPayload {
   restoredBy?: string | null;
 }
 
-export class PersonRestoredEvent implements DomainEvent<PersonRestoredPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.person.restored';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: PersonRestoredPayload;
-
+export class PersonRestoredEvent extends BaseDomainEvent<PersonRestoredPayload> {
   constructor(payload: PersonRestoredPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.personId;
-    this.payload = payload;
+    super('people.person.restored', payload.personId, payload);
   }
 }
 
@@ -96,23 +61,15 @@ export interface OrganizationCreatedPayload {
   organizationId: string;
   code: string;
   legalName: string;
+  tradeName?: string | null;
   taxIdNumber?: string | null;
   status: OrganizationStatus;
   createdBy?: string | null;
 }
 
-export class OrganizationCreatedEvent implements DomainEvent<OrganizationCreatedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.organization.created';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: OrganizationCreatedPayload;
-
+export class OrganizationCreatedEvent extends BaseDomainEvent<OrganizationCreatedPayload> {
   constructor(payload: OrganizationCreatedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.organizationId;
-    this.payload = payload;
+    super('people.organization.created', payload.organizationId, payload);
   }
 }
 
@@ -123,18 +80,9 @@ export interface OrganizationUpdatedPayload {
   updatedBy?: string | null;
 }
 
-export class OrganizationUpdatedEvent implements DomainEvent<OrganizationUpdatedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.organization.updated';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: OrganizationUpdatedPayload;
-
+export class OrganizationUpdatedEvent extends BaseDomainEvent<OrganizationUpdatedPayload> {
   constructor(payload: OrganizationUpdatedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.organizationId;
-    this.payload = payload;
+    super('people.organization.updated', payload.organizationId, payload);
   }
 }
 
@@ -145,18 +93,9 @@ export interface OrganizationArchivedPayload {
   deletedBy?: string | null;
 }
 
-export class OrganizationArchivedEvent implements DomainEvent<OrganizationArchivedPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.organization.archived';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: OrganizationArchivedPayload;
-
+export class OrganizationArchivedEvent extends BaseDomainEvent<OrganizationArchivedPayload> {
   constructor(payload: OrganizationArchivedPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.organizationId;
-    this.payload = payload;
+    super('people.organization.archived', payload.organizationId, payload);
   }
 }
 
@@ -167,17 +106,8 @@ export interface OrganizationRestoredPayload {
   restoredBy?: string | null;
 }
 
-export class OrganizationRestoredEvent implements DomainEvent<OrganizationRestoredPayload> {
-  readonly eventId: string;
-  readonly eventName = 'people.organization.restored';
-  readonly occurredOn: Date;
-  readonly aggregateId: string;
-  readonly payload: OrganizationRestoredPayload;
-
+export class OrganizationRestoredEvent extends BaseDomainEvent<OrganizationRestoredPayload> {
   constructor(payload: OrganizationRestoredPayload) {
-    this.eventId = crypto.randomUUID();
-    this.occurredOn = new Date();
-    this.aggregateId = payload.organizationId;
-    this.payload = payload;
+    super('people.organization.restored', payload.organizationId, payload);
   }
 }

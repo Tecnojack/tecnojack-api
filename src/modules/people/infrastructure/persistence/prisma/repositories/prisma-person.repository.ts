@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { PrismaService } from '../../../../../../platform/database/prisma/prisma.service.js';
 import { Person } from '../../../../domain/entities/person.entity.js';
 import {
@@ -9,10 +9,18 @@ import {
 import { PersonMapper, type PrismaPersonWithContacts } from '../mappers/person.mapper.js';
 import { DocumentType, PersonStatus } from '../../../../domain/enums/people.enums.js';
 import type { Prisma } from '../../../../../../generated/prisma/client.js';
+import {
+  SEQUENCE_GENERATOR,
+  type SequenceGeneratorPort,
+} from '../../../../../../platform/domain/providers/sequence-generator.port.js';
 
 @Injectable()
 export class PrismaPersonRepository implements PersonRepositoryPort {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject(SEQUENCE_GENERATOR)
+    private readonly sequenceGenerator: SequenceGeneratorPort,
+  ) {}
 
   async save(person: Person): Promise<Person> {
     const data = PersonMapper.toPersistence(person);
@@ -140,8 +148,6 @@ export class PrismaPersonRepository implements PersonRepositoryPort {
   }
 
   async nextCode(): Promise<string> {
-    const count = await this.prisma.person.count();
-    const nextSeq = count + 1;
-    return `PER-${nextSeq.toString().padStart(6, '0')}`;
+    return this.sequenceGenerator.nextCode('PER');
   }
 }

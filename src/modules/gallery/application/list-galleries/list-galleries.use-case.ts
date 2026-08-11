@@ -1,0 +1,20 @@
+import { Injectable, Inject } from '@nestjs/common';
+import {
+  GALLERY_REPOSITORY,
+  type GalleryRepositoryPort,
+  type ListGalleriesFilter,
+} from '../ports/gallery.repository.port.js';
+import type { Gallery } from '../../domain/entities/gallery.entity.js';
+import type { PaginatedResult } from '../../../../platform/domain/types/pagination.types.js';
+
+@Injectable()
+export class ListGalleriesUseCase {
+  constructor(
+    @Inject(GALLERY_REPOSITORY)
+    private readonly galleryRepo: GalleryRepositoryPort,
+  ) {}
+
+  async execute(filter: ListGalleriesFilter): Promise<PaginatedResult<Gallery>> {
+    return this.galleryRepo.findAll(filter);
+  }
+}

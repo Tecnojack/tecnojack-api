@@ -8,7 +8,7 @@ import { Organization } from '../../../../domain/entities/organization.entity.js
 import { OrganizationName } from '../../../../domain/value-objects/organization-name.value-object.js';
 import { TaxDocument } from '../../../../domain/value-objects/tax-document.value-object.js';
 import { ContactInformation } from '../../../../domain/value-objects/contact-information.value-object.js';
-import { AuditInfo } from '../../../../../../shared/domain/value-objects/audit-info.value-object.js';
+import { AuditInfo } from '../../../../../../platform/domain/value-objects/audit-info.value-object.js';
 import type { OrganizationStatus, ContactType } from '../../../../domain/enums/people.enums.js';
 
 export type PrismaOrgWithContacts = PrismaOrg & {

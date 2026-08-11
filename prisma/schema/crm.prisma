@@ -1,0 +1,142 @@
+enum CRMPipelineStage {
+  NEW_LEAD
+  CONTACTED
+  MEETING_SCHEDULED
+  QUOTATION_SENT
+  NEGOTIATION
+  APPROVED
+  REJECTED
+  CONVERTED
+  ARCHIVED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum CRMActivityType {
+  CALL
+  MEETING
+  NOTE
+  EMAIL_LOG
+  OTHER
+}
+
+model OpportunityModel {
+  id                    String                @id @default(uuid()) @db.Uuid
+  code                  String                @unique @db.VarChar(32)
+  title                 String                @db.VarChar(255)
+  description           String?               @db.Text
+  personId              String?               @map("person_id") @db.Uuid
+  organizationId        String?               @map("organization_id") @db.Uuid
+
+  eventId               String?               @map("event_id") @db.Uuid
+  contractId            String?               @map("contract_id") @db.Uuid
+  paymentId             String?               @map("payment_id") @db.Uuid
+
+  stage                 CRMPipelineStage      @default(NEW_LEAD)
+  estimatedValue        Decimal               @default(0) @map("estimated_value") @db.Decimal(12, 2)
+  currency              String                @default("COP") @db.VarChar(3)
+  probabilityPercentage Int                   @default(10) @map("probability_percentage")
+
+  createdAt             DateTime              @default(now()) @map("created_at")
+  createdBy             String?               @map("created_by") @db.Uuid
+  updatedAt             DateTime              @updatedAt @map("updated_at")
+  updatedBy             String?               @map("updated_by") @db.Uuid
+  deletedAt             DateTime?             @map("deleted_at")
+  deletedBy             String?               @map("deleted_by") @db.Uuid
+
+  quotations            QuotationModel[]
+  activities            CRMActivityModel[]
+  tasks                 CRMTaskModel[]
+  journeyHistory        CustomerJourneyModel[]
+
+  @@index([code])
+  @@index([personId])
+  @@index([organizationId])
+  @@index([eventId])
+  @@index([stage])
+  @@index([deletedAt])
+  @@map("opportunities")
+}
+
+model QuotationModel {
+  id               String            @id @default(uuid()) @db.Uuid
+  opportunityId    String            @map("opportunity_id") @db.Uuid
+  quotationNumber  String            @db.VarChar(64)
+  title            String            @db.VarChar(255)
+  subtotalAmount   Decimal           @default(0) @map("subtotal_amount") @db.Decimal(12, 2)
+  taxAmount        Decimal           @default(0) @map("tax_amount") @db.Decimal(12, 2)
+  totalAmount      Decimal           @default(0) @map("total_amount") @db.Decimal(12, 2)
+  status           QuotationStatus   @default(DRAFT)
+  validUntil       DateTime?         @map("valid_until")
+  itemsJson        Json?             @map("items_json")
+
+  createdAt        DateTime          @default(now()) @map("created_at")
+  createdBy        String?           @map("created_by") @db.Uuid
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+
+  opportunity      OpportunityModel  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId])
+  @@index([status])
+  @@map("quotations")
+}
+
+model CustomerJourneyModel {
+  id             String            @id @default(uuid()) @db.Uuid
+  opportunityId  String            @map("opportunity_id") @db.Uuid
+  fromStage      CRMPipelineStage  @map("from_stage")
+  toStage        CRMPipelineStage  @map("to_stage")
+  notes          String?           @db.Text
+  changedAt      DateTime          @default(now()) @map("changed_at")
+  actorId        String?           @map("actor_id") @db.Uuid
+
+  opportunity    OpportunityModel  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId])
+  @@map("customer_journeys")
+}
+
+model CRMActivityModel {
+  id             String            @id @default(uuid()) @db.Uuid
+  opportunityId  String            @map("opportunity_id") @db.Uuid
+  activityType   CRMActivityType   @default(NOTE) @map("activity_type")
+  title          String            @db.VarChar(255)
+  notes          String?           @db.Text
+  occurredAt     DateTime          @default(now()) @map("occurred_at")
+  actorId        String?           @map("actor_id") @db.Uuid
+
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+
+  opportunity    OpportunityModel  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId])
+  @@index([activityType])
+  @@map("crm_activities")
+}
+
+model CRMTaskModel {
+  id             String            @id @default(uuid()) @db.Uuid
+  opportunityId  String            @map("opportunity_id") @db.Uuid
+  title          String            @db.VarChar(255)
+  description    String?           @db.Text
+  dueDate        DateTime          @map("due_date")
+  isCompleted    Boolean           @default(false) @map("is_completed")
+  completedAt    DateTime?         @map("completed_at")
+
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+
+  opportunity    OpportunityModel  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId])
+  @@index([dueDate])
+  @@index([isCompleted])
+  @@map("crm_tasks")
+}

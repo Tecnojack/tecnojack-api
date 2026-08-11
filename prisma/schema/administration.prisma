@@ -1,0 +1,80 @@
+model SystemSettingModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // SET-XXXXXX
+  key            String   @unique
+  value          String
+  description    String?
+  category       String   // BRANDING, BUSINESS, LANGUAGE, CURRENCY, GENERAL
+
+  // Audit Info
+  createdAt      DateTime @default(now())
+  createdBy      String?
+  updatedAt      DateTime @updatedAt
+  updatedBy      String?
+  deletedAt      DateTime?
+  deletedBy      String?
+
+  @@index([category])
+  @@map("system_settings")
+}
+
+model FeatureFlagModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // FFG-XXXXXX
+  key            String   @unique
+  isEnabled      Boolean  @default(false)
+  description    String?
+
+  // Audit Info
+  createdAt      DateTime @default(now())
+  createdBy      String?
+  updatedAt      DateTime @updatedAt
+  updatedBy      String?
+  deletedAt      DateTime?
+  deletedBy      String?
+
+  @@map("feature_flags")
+}
+
+model CatalogModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // CTL-XXXXXX
+  name           String   // e.g. "Country", "Tag"
+  type           String   // TAG, CATEGORY, COUNTRY, LANGUAGE, CURRENCY
+  value          String   // e.g. "MX", "es-MX", "MXN"
+  label          String   // e.g. "México", "Español (México)"
+  description    String?
+
+  // Audit Info
+  createdAt      DateTime @default(now())
+  createdBy      String?
+  updatedAt      DateTime @updatedAt
+  updatedBy      String?
+  deletedAt      DateTime?
+  deletedBy      String?
+
+  @@unique([type, value])
+  @@index([type])
+  @@map("catalogs")
+}
+
+model DashboardWidgetModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // WDG-XXXXXX
+  title          String
+  type           String   // CHART_BAR, CHART_LINE, STAT_CARD, LIST
+  dataSourceUrl  String
+  position       Int      @default(0)
+  size           String   // SMALL, MEDIUM, LARGE
+  permissions    String[] // Permissions required to view this widget
+
+  // Audit Info
+  createdAt      DateTime @default(now())
+  createdBy      String?
+  updatedAt      DateTime @updatedAt
+  updatedBy      String?
+  deletedAt      DateTime?
+  deletedBy      String?
+
+  @@map("dashboard_widgets")
+}

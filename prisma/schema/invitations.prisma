@@ -1,0 +1,90 @@
+model InvitationModel {
+  id               String   @id @default(uuid())
+  code             String   @unique // Business Code: INV-XXXXXX
+  eventId          String   // References Events domain
+  slug             String   @unique
+  title            String
+  description      String?
+  language         String   @default("es")
+  status           String   // EnumInvitationStatus: DRAFT, PUBLISHED, etc.
+  visibility       String   // EnumInvitationVisibility: PUBLIC, PRIVATE_PASSWORD, etc.
+  passwordHash     String?  // Optional password for access
+  expiresAt        DateTime?
+  galleryId        String?  // Gallery reference
+  coverMediaId     String?  // Cover asset reference
+  musicUrl         String?  // Optional background music URL path
+  
+  // Theme settings stored as raw JSON structure
+  themeJson        String?  // colors, fonts, margins, style configurations
+
+  // Audit Info
+  createdAt        DateTime @default(now())
+  createdBy        String?
+  updatedAt        DateTime @updatedAt
+  updatedBy        String?
+  deletedAt        DateTime?
+  deletedBy        String?
+
+  sections         InvitationSectionModel[]
+  guests           InvitationGuestModel[]
+  schedules        InvitationScheduleModel[]
+
+  @@index([eventId])
+  @@index([createdAt])
+  @@map("invitations")
+}
+
+model InvitationSectionModel {
+  id             String            @id @default(uuid())
+  invitationId   String
+  type           String            // e.g. MAP, DRESS_CODE, GIFT_TABLE, TIMELINE
+  title          String
+  contentJson    String?           // Dynamic content values for the section
+  orderIndex     Int               @default(0)
+  isEnabled      Boolean           @default(true)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  invitation     InvitationModel   @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  @@map("invitation_sections")
+}
+
+model InvitationGuestModel {
+  id                  String            @id @default(uuid())
+  invitationId        String
+  personId            String?           // References People domain
+  displayName         String
+  email               String?
+  phone               String?
+  maxCompanions       Int               @default(0)
+  rsvpStatus          String            // EnumRSVPStatus: PENDING, CONFIRMED, DECLINED
+  confirmedCompanions Int               @default(0)
+  dietaryRestrictions String?           // Vegan, gluten-free, allergy logs
+  guestNotes          String?           // Personal messages/dedications to the host
+  companionsJson      String?           // Names of confirmed companions
+  confirmedAt         DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  invitation          InvitationModel   @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  @@index([invitationId])
+  @@map("invitation_guests")
+}
+
+model InvitationScheduleModel {
+  id             String            @id @default(uuid())
+  invitationId   String
+  title          String
+  description    String?
+  timeLabel      String            // e.g. "19:00", "07:00 PM"
+  locationLabel  String?           // Optional specific room/sub-location label
+  orderIndex     Int               @default(0)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  invitation     InvitationModel   @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  @@map("invitation_schedules")
+}

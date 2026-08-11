@@ -1,0 +1,129 @@
+enum ContractStatus {
+  DRAFT
+  PENDING_SIGNATURE
+  PARTIALLY_SIGNED
+  EXECUTED
+  CANCELLED
+  EXPIRED
+  ARCHIVED
+}
+
+enum ContractTemplateType {
+  SERVICE_AGREEMENT
+  MODEL_RELEASE
+  INTELLECTUAL_PROPERTY
+  EVENT_TERMS
+  CUSTOM
+}
+
+enum ContractPartyRole {
+  PROVIDER
+  CLIENT
+  WITNESS
+  GUARANTOR
+  OTHER
+}
+
+enum SignatureStatus {
+  PENDING
+  SIGNED
+  DECLINED
+  EXPIRED
+}
+
+model ContractModel {
+  id                    String                @id @default(uuid()) @db.Uuid
+  code                  String                @unique @db.VarChar(32)
+  title                 String                @db.VarChar(255)
+  description           String?               @db.Text
+  eventId               String                @map("event_id") @db.Uuid
+  deliverableId         String?               @map("deliverable_id") @db.Uuid
+  status                ContractStatus        @default(DRAFT)
+  templateType          ContractTemplateType  @default(SERVICE_AGREEMENT) @map("template_type")
+  currentVersionNumber  Int                   @default(1) @map("current_version_number")
+
+  notes                 String?               @db.Text
+  signedAt              DateTime?             @map("signed_at")
+  expiresAt             DateTime?             @map("expires_at")
+
+  createdAt             DateTime              @default(now()) @map("created_at")
+  createdBy             String?               @map("created_by") @db.Uuid
+  updatedAt             DateTime              @updatedAt @map("updated_at")
+  updatedBy             String?               @map("updated_by") @db.Uuid
+  deletedAt             DateTime?             @map("deleted_at")
+  deletedBy             String?               @map("deleted_by") @db.Uuid
+
+  versions              ContractVersionModel[]
+  parties               ContractPartyModel[]
+  signatures            ContractSignatureModel[]
+
+  @@index([code])
+  @@index([eventId])
+  @@index([deliverableId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("contracts")
+}
+
+model ContractVersionModel {
+  id              String               @id @default(uuid()) @db.Uuid
+  contractId      String               @map("contract_id") @db.Uuid
+  versionNumber   Int                  @map("version_number")
+  title           String               @db.VarChar(255)
+  contentSummary  String?              @map("content_summary") @db.Text
+  clausesJson     Json?                @map("clauses_json")
+  changeReason    String?              @map("change_reason") @db.Text
+
+  createdAt       DateTime             @default(now()) @map("created_at")
+  createdBy       String?              @map("created_by") @db.Uuid
+
+  contract        ContractModel        @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, versionNumber])
+  @@index([contractId])
+  @@map("contract_versions")
+}
+
+model ContractPartyModel {
+  id              String                  @id @default(uuid()) @db.Uuid
+  contractId      String                  @map("contract_id") @db.Uuid
+  personId        String?                 @map("person_id") @db.Uuid
+  organizationId  String?                 @map("organization_id") @db.Uuid
+  role            ContractPartyRole       @default(CLIENT)
+  isPrimary       Boolean                 @default(false) @map("is_primary")
+
+  createdAt       DateTime                @default(now()) @map("created_at")
+  updatedAt       DateTime                @updatedAt @map("updated_at")
+
+  contract        ContractModel           @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  signatures      ContractSignatureModel[]
+
+  @@index([contractId])
+  @@index([personId])
+  @@index([organizationId])
+  @@map("contract_parties")
+}
+
+model ContractSignatureModel {
+  id                  String               @id @default(uuid()) @db.Uuid
+  contractId          String               @map("contract_id") @db.Uuid
+  partyId             String               @map("party_id") @db.Uuid
+  status              SignatureStatus      @default(PENDING)
+  signerName          String?              @map("signer_name") @db.VarChar(255)
+  signerEmail         String?              @map("signer_email") @db.VarChar(255)
+  signatureProvider   String?              @map("signature_provider") @db.VarChar(64)
+  externalEnvelopeId  String?              @map("external_envelope_id") @db.VarChar(128)
+  signedAt            DateTime?            @map("signed_at")
+  ipAddress           String?              @map("ip_address") @db.VarChar(64)
+
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+
+  contract            ContractModel        @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  party               ContractPartyModel   @relation(fields: [partyId], references: [id], onDelete: Cascade)
+
+  @@index([contractId])
+  @@index([partyId])
+  @@index([status])
+  @@map("contract_signatures")
+}

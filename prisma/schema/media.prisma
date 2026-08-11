@@ -1,0 +1,52 @@
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  ARCHIVE
+  OTHER
+}
+
+enum MediaStatus {
+  PROCESSING
+  READY
+  FAILED
+  ARCHIVED
+}
+
+model MediaAsset {
+  id             String      @id @default(uuid()) @db.Uuid
+  code           String      @unique @db.VarChar(32)
+  type           MediaType
+  status         MediaStatus @default(READY)
+
+  originalName   String      @map("original_name") @db.VarChar(255)
+  normalizedName String      @map("normalized_name") @db.VarChar(255)
+  mimeType       String      @map("mime_type") @db.VarChar(127)
+  sizeBytes      BigInt      @map("size_bytes")
+  path           String      @db.VarChar(512)
+  url            String      @db.VarChar(1024)
+
+  checksumAlgo   String?     @map("checksum_algo") @db.VarChar(32)
+  checksumHash   String?     @map("checksum_hash") @db.VarChar(128)
+
+  width          Int?
+  height         Int?
+  aspectRatio    String?     @map("aspect_ratio") @db.VarChar(20)
+
+  durationSec    Float?      @map("duration_sec")
+
+  createdAt      DateTime    @default(now()) @map("created_at")
+  createdBy      String?     @map("created_by") @db.Uuid
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+  updatedBy      String?     @map("updated_by") @db.Uuid
+  deletedAt      DateTime?   @map("deleted_at")
+  deletedBy      String?     @map("deleted_by") @db.Uuid
+
+  @@index([code])
+  @@index([type])
+  @@index([status])
+  @@index([checksumHash])
+  @@index([deletedAt])
+  @@map("media_assets")
+}

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { PrismaService } from '../../../../../../platform/database/prisma/prisma.service.js';
 import { Organization } from '../../../../domain/entities/organization.entity.js';
 import {
@@ -9,10 +9,18 @@ import { type PaginatedResult } from '../../../../application/ports/person.repos
 import { OrganizationMapper, type PrismaOrgWithContacts } from '../mappers/organization.mapper.js';
 import { OrganizationStatus } from '../../../../domain/enums/people.enums.js';
 import type { Prisma } from '../../../../../../generated/prisma/client.js';
+import {
+  SEQUENCE_GENERATOR,
+  type SequenceGeneratorPort,
+} from '../../../../../../platform/domain/providers/sequence-generator.port.js';
 
 @Injectable()
 export class PrismaOrganizationRepository implements OrganizationRepositoryPort {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject(SEQUENCE_GENERATOR)
+    private readonly sequenceGenerator: SequenceGeneratorPort,
+  ) {}
 
   async save(organization: Organization): Promise<Organization> {
     const data = OrganizationMapper.toPersistence(organization);
@@ -138,8 +146,6 @@ export class PrismaOrganizationRepository implements OrganizationRepositoryPort 
   }
 
   async nextCode(): Promise<string> {
-    const count = await this.prisma.organization.count();
-    const nextSeq = count + 1;
-    return `ORG-${nextSeq.toString().padStart(6, '0')}`;
+    return this.sequenceGenerator.nextCode('ORG');
   }
 }

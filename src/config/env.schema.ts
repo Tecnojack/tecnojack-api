@@ -21,6 +21,8 @@ const environmentSchema = z.object({
   RATE_LIMIT_LIMIT: z.coerce.number().int().positive().default(100),
   STORAGE_PROVIDER: z.enum(['local', 's3', 'r2', 'azure', 'minio']).default('local'),
   STORAGE_BUCKET: z.string().trim().min(1).default('tecnojack'),
+  STORAGE_LOCAL_ROOT: z.string().trim().min(1).default('storage/uploads'),
+  STORAGE_BASE_URL: z.string().trim().default('http://localhost:3000/uploads'),
   MAIL_PROVIDER: z.enum(['log', 'smtp']).default('log'),
   UPLOAD_MAX_FILE_SIZE_BYTES: z.coerce.number().int().positive().default(52_428_800),
   IMAGE_MAX_WIDTH: z.coerce.number().int().positive().default(12_000),

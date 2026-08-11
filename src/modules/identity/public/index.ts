@@ -1,0 +1,17 @@
+export * from '../domain/enums/identity.enums.js';
+export * from '../domain/errors/identity.errors.js';
+export * from '../domain/entities/user.entity.js';
+export * from '../domain/entities/role.entity.js';
+export * from '../domain/entities/permission.entity.js';
+export * from '../domain/entities/policy.entity.js';
+export * from '../domain/entities/session.entity.js';
+export * from '../domain/entities/api-key.entity.js';
+export * from '../domain/value-objects/password-hash.value-object.js';
+export * from '../domain/value-objects/claim.value-object.js';
+export * from '../domain/value-objects/auth-provider.value-object.js';
+export * from './identity.facade.js';
+export * from '../presentation/http/guards/auth.guard.js';
+export * from '../presentation/http/guards/permission.guard.js';
+export * from '../presentation/http/decorators/current-user.decorator.js';
+export * from '../presentation/http/decorators/require-permissions.decorator.js';
+export { IDENTITY_REPOSITORY } from '../application/ports/identity.repository.port.js';

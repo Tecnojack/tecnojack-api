@@ -1,0 +1,83 @@
+enum DeliverableType {
+  PHOTOS
+  VIDEOS
+  DIGITAL_ALBUM
+  PRINTED_ALBUM
+  USB_DRIVE
+  DOWNLOAD_LINK
+  CUSTOM
+}
+
+enum DeliverableStatus {
+  DRAFT
+  IN_PROGRESS
+  READY
+  DELIVERED
+  CANCELLED
+  ARCHIVED
+}
+
+enum DeliveryMethod {
+  DIGITAL_DOWNLOAD
+  PHYSICAL_SHIPPING
+  IN_PERSON_PICKUP
+  COURIER
+  THIRD_PARTY_SERVICE
+  OTHER
+}
+
+model DeliverableModel {
+  id                   String               @id @default(uuid()) @db.Uuid
+  code                 String               @unique @db.VarChar(32)
+  name                 String               @db.VarChar(255)
+  description          String?              @db.Text
+  eventId              String               @map("event_id") @db.Uuid
+  type                 DeliverableType      @default(PHOTOS)
+  status               DeliverableStatus    @default(DRAFT)
+  deliveryMethod       DeliveryMethod       @default(DIGITAL_DOWNLOAD) @map("delivery_method")
+
+  recipientPersonId    String?              @map("recipient_person_id") @db.Uuid
+  targetGalleryId      String?              @map("target_gallery_id") @db.Uuid
+
+  estimatedDeliveryAt  DateTime?            @map("estimated_delivery_at")
+  deliveredAt          DateTime?            @map("delivered_at")
+
+  trackingNumber       String?              @map("tracking_number") @db.VarChar(128)
+  deliveryNotes        String?              @map("delivery_notes") @db.Text
+
+  createdAt            DateTime             @default(now()) @map("created_at")
+  createdBy            String?              @map("created_by") @db.Uuid
+  updatedAt            DateTime             @updatedAt @map("updated_at")
+  updatedBy            String?              @map("updated_by") @db.Uuid
+  deletedAt            DateTime?            @map("deleted_at")
+  deletedBy            String?              @map("deleted_by") @db.Uuid
+
+  items                DeliverableItemModel[]
+
+  @@index([code])
+  @@index([eventId])
+  @@index([status])
+  @@index([type])
+  @@index([deletedAt])
+  @@map("deliverables")
+}
+
+model DeliverableItemModel {
+  id             String           @id @default(uuid()) @db.Uuid
+  deliverableId  String           @map("deliverable_id") @db.Uuid
+  mediaAssetId   String?          @map("media_asset_id") @db.Uuid
+  title          String           @db.VarChar(255)
+  description    String?          @db.Text
+  quantity       Int              @default(1)
+  isCompleted    Boolean          @default(false) @map("is_completed")
+  sortOrder      Int              @default(0) @map("sort_order")
+
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  deliverable    DeliverableModel @relation(fields: [deliverableId], references: [id], onDelete: Cascade)
+
+  @@index([deliverableId])
+  @@index([mediaAssetId])
+  @@map("deliverable_items")
+}

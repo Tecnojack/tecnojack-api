@@ -1,0 +1,75 @@
+model NotificationTemplateModel {
+  id             String   @id @default(uuid())
+  code           String   @unique // Business code, e.g. TEMP-000001
+  name           String
+  category       String   // e.g. CONTRACT_SIGNATURE, PAYMENT_REMINDER
+  language       String   // e.g. es, en
+  version        Int      @default(1)
+  subjectLayout  String?  // Optional subject layout with placeholders (for email/push)
+  bodyLayout     String   // Body layout containing placeholders (e.g. "Hola {{name}}...")
+  variables      String[] // Expected placeholder variable names
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+
+  notifications  NotificationModel[]
+
+  @@map("notification_templates")
+}
+
+model NotificationModel {
+  id                    String                 @id @default(uuid())
+  code                  String                 @unique // Business code, e.g. NTF-000001
+  templateId            String?
+  channel               String                 // EnumNotificationChannel: EMAIL, WHATSAPP, etc.
+  status                String                 // EnumNotificationStatus: PENDING, SCHEDULED, etc.
+  priority              String                 // EnumNotificationPriority: LOW, MEDIUM, etc.
+  variablesJson         String?                // Dynamic variables for rendering
+  scheduledFor          DateTime?
+  retryCount            Int                    @default(0)
+  maxRetries            Int                    @default(3)
+  errorMessage          String?
+  
+  // Audit info
+  createdAt             DateTime               @default(now())
+  createdBy             String?
+  updatedAt             DateTime               @updatedAt
+  updatedBy             String?
+  deletedAt             DateTime?
+  deletedBy             String?
+
+  template              NotificationTemplateModel? @relation(fields: [templateId], references: [id])
+  recipients            NotificationRecipientModel[]
+  historyLogs           NotificationHistoryModel[]
+
+  @@index([status])
+  @@index([scheduledFor])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model NotificationRecipientModel {
+  id               String            @id @default(uuid())
+  notificationId   String
+  personId         String?           // Reference to People domain
+  recipientAddress String            // email address, phone number, token, etc.
+  recipientType    String            // TO, CC, BCC
+  createdAt        DateTime          @default(now())
+
+  notification     NotificationModel @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@map("notification_recipients")
+}
+
+model NotificationHistoryModel {
+  id             String            @id @default(uuid())
+  notificationId String
+  status         String            // Status resulting from this dispatch attempt
+  providerName   String?           // Provider that attempted the dispatch
+  errorMessage   String?
+  attemptedAt    DateTime          @default(now())
+
+  notification   NotificationModel @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@map("notification_history")
+}

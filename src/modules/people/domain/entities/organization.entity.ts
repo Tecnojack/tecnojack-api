@@ -1,11 +1,12 @@
-import { AuditInfo } from '../../../../shared/domain/value-objects/audit-info.value-object.js';
+import { AggregateRoot } from '../../../../platform/domain/entities/aggregate-root.js';
+import type { ISoftDeletable } from '../../../../platform/domain/interfaces/soft-deletable.interface.js';
+import { AuditInfo } from '../../../../platform/domain/value-objects/audit-info.value-object.js';
 import { OrganizationStatus } from '../enums/people.enums.js';
 import type { OrganizationName } from '../value-objects/organization-name.value-object.js';
 import type { TaxDocument } from '../value-objects/tax-document.value-object.js';
 import { ContactInformation } from '../value-objects/contact-information.value-object.js';
 import { OrganizationAlreadyDeletedException } from '../errors/people.errors.js';
 import {
-  type DomainEvent,
   OrganizationCreatedEvent,
   OrganizationUpdatedEvent,
   OrganizationArchivedEvent,
@@ -22,22 +23,22 @@ export interface OrganizationProps {
   audit?: AuditInfo;
 }
 
-export class Organization {
-  private readonly _id: string;
+export class Organization extends AggregateRoot<string> implements ISoftDeletable {
   private readonly _code: string;
   private _name: OrganizationName;
   private _taxDocument: TaxDocument | null;
   private _status: OrganizationStatus;
   private _contactPoints: ContactInformation[];
   private _audit: AuditInfo;
-  private _domainEvents: DomainEvent[] = [];
 
   constructor(props: OrganizationProps) {
     if (!props.code || props.code.trim().length === 0) {
       throw new Error('Organization code cannot be empty.');
     }
 
-    this._id = props.id ?? crypto.randomUUID();
+    const id = props.id ?? crypto.randomUUID();
+    super(id);
+
     this._code = props.code.trim();
     this._name = props.name;
     this._taxDocument = props.taxDocument ?? null;
@@ -57,6 +58,7 @@ export class Organization {
         organizationId: org.id,
         code: org.code,
         legalName: org.name.legalName,
+        tradeName: org.name.tradeName,
         taxIdNumber: org.taxDocument?.taxId ?? null,
         status: org.status,
         createdBy: actorId ?? null,
@@ -64,10 +66,6 @@ export class Organization {
     );
 
     return org;
-  }
-
-  get id(): string {
-    return this._id;
   }
 
   get code(): string {
@@ -94,16 +92,8 @@ export class Organization {
     return this._audit;
   }
 
-  get domainEvents(): readonly DomainEvent[] {
-    return this._domainEvents;
-  }
-
-  clearDomainEvents(): void {
-    this._domainEvents = [];
-  }
-
-  private addDomainEvent(event: DomainEvent): void {
-    this._domainEvents.push(event);
+  isDeleted(): boolean {
+    return this._audit.isDeleted();
   }
 
   updateName(name: OrganizationName, actorId?: string): void {
@@ -113,7 +103,7 @@ export class Organization {
 
     this.addDomainEvent(
       new OrganizationUpdatedEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         updatedFields: ['name'],
         updatedBy: actorId ?? null,
@@ -128,7 +118,7 @@ export class Organization {
 
     this.addDomainEvent(
       new OrganizationUpdatedEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         updatedFields: ['taxDocument'],
         updatedBy: actorId ?? null,
@@ -145,7 +135,7 @@ export class Organization {
 
     this.addDomainEvent(
       new OrganizationUpdatedEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         updatedFields: ['status'],
         updatedBy: actorId ?? null,
@@ -180,7 +170,7 @@ export class Organization {
     this._audit = this._audit.touch(actorId);
     this.addDomainEvent(
       new OrganizationUpdatedEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         updatedFields: ['contactPoints'],
         updatedBy: actorId ?? null,
@@ -197,7 +187,7 @@ export class Organization {
       this._audit = this._audit.touch(actorId);
       this.addDomainEvent(
         new OrganizationUpdatedEvent({
-          organizationId: this._id,
+          organizationId: this.id,
           code: this._code,
           updatedFields: ['contactPoints'],
           updatedBy: actorId ?? null,
@@ -208,13 +198,13 @@ export class Organization {
 
   softDelete(actorId?: string): void {
     if (this._audit.isDeleted()) {
-      throw new OrganizationAlreadyDeletedException(this._id);
+      throw new OrganizationAlreadyDeletedException(this.id);
     }
 
     this._audit = this._audit.softDelete(actorId);
     this.addDomainEvent(
       new OrganizationArchivedEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         deletedAt: this._audit.deletedAt!,
         deletedBy: actorId ?? null,
@@ -228,7 +218,7 @@ export class Organization {
     this._audit = this._audit.restore(actorId);
     this.addDomainEvent(
       new OrganizationRestoredEvent({
-        organizationId: this._id,
+        organizationId: this.id,
         code: this._code,
         restoredAt: new Date(),
         restoredBy: actorId ?? null,
@@ -238,7 +228,7 @@ export class Organization {
 
   private ensureNotDeleted(): void {
     if (this._audit.isDeleted()) {
-      throw new OrganizationAlreadyDeletedException(this._id);
+      throw new OrganizationAlreadyDeletedException(this.id);
     }
   }
 }
