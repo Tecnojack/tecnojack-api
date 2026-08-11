@@ -1,0 +1,113 @@
+enum PersonStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum DocumentType {
+  NATIONAL_ID
+  PASSPORT
+  TAX_ID
+  FOREIGN_ID
+  DRIVERS_LICENSE
+  OTHER
+}
+
+enum ContactType {
+  EMAIL
+  PHONE
+  WHATSAPP
+  ADDRESS
+  WEBSITE
+  SOCIAL_MEDIA
+}
+
+model Person {
+  id                     String              @id @default(uuid()) @db.Uuid
+  code                   String              @unique @db.VarChar(32)
+  givenNames             String              @map("given_names") @db.VarChar(150)
+  familyNames            String?             @map("family_names") @db.VarChar(150)
+  displayName            String              @map("display_name") @db.VarChar(300)
+  prefix                 String?             @db.VarChar(20)
+  suffix                 String?             @db.VarChar(20)
+  documentIssuingCountry String?             @map("document_issuing_country") @db.VarChar(2)
+  documentType           DocumentType?       @map("document_type")
+  documentNumber         String?             @map("document_number") @db.VarChar(60)
+  documentFormatted      String?             @map("document_formatted") @db.VarChar(100)
+  status                 PersonStatus        @default(ACTIVE)
+  createdAt              DateTime            @default(now()) @map("created_at")
+  createdBy              String?             @map("created_by") @db.Uuid
+  updatedAt              DateTime            @updatedAt @map("updated_at")
+  updatedBy              String?             @map("updated_by") @db.Uuid
+  deletedAt              DateTime?           @map("deleted_at")
+  deletedBy              String?             @map("deleted_by") @db.Uuid
+
+  contactInformation     PersonContactInfo[]
+
+  @@unique([documentIssuingCountry, documentType, documentNumber])
+  @@index([code])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("persons")
+}
+
+model PersonContactInfo {
+  id        String      @id @default(uuid()) @db.Uuid
+  personId  String      @map("person_id") @db.Uuid
+  type      ContactType
+  value     String      @db.Text
+  label     String?     @db.VarChar(100)
+  isPrimary Boolean     @default(false) @map("is_primary")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  person    Person      @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  @@index([personId])
+  @@map("person_contact_information")
+}
+
+model Organization {
+  id                     String                    @id @default(uuid()) @db.Uuid
+  code                   String                    @unique @db.VarChar(32)
+  legalName              String                    @map("legal_name") @db.VarChar(200)
+  tradeName              String?                   @map("trade_name") @db.VarChar(200)
+  taxIdIssuingCountry    String?                   @map("tax_id_issuing_country") @db.VarChar(2)
+  taxIdNumber            String?                   @map("tax_id_number") @db.VarChar(60)
+  taxIdVerificationDigit String?                   @map("tax_id_verification_digit") @db.VarChar(10)
+  status                 OrganizationStatus        @default(ACTIVE)
+  createdAt              DateTime                  @default(now()) @map("created_at")
+  createdBy              String?                   @map("created_by") @db.Uuid
+  updatedAt              DateTime                  @updatedAt @map("updated_at")
+  updatedBy              String?                   @map("updated_by") @db.Uuid
+  deletedAt              DateTime?                 @map("deleted_at")
+  deletedBy              String?                   @map("deleted_by") @db.Uuid
+
+  contactInformation     OrganizationContactInfo[]
+
+  @@unique([taxIdIssuingCountry, taxIdNumber])
+  @@index([code])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("organizations")
+}
+
+model OrganizationContactInfo {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @map("organization_id") @db.Uuid
+  type           ContactType
+  value          String       @db.Text
+  label          String?      @db.VarChar(100)
+  isPrimary      Boolean      @default(false) @map("is_primary")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("organization_contact_information")
+}
