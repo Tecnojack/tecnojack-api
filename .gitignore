@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build and generated output
+dist/
+coverage/
+src/generated/prisma/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and runtime files
+*.log
+logs/
+tmp/
+.tmp/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+test-results/
+
+# Prisma local artifacts
+prisma/*.db
+prisma/*.db-journal
+
