@@ -220,44 +220,44 @@ No se cargarán dentro del agregado archivos, galerías, pagos, contratos, notif
 
 ### 6.1 Event
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad técnica inmutable |
-| `code` | Código empresarial único e inmutable |
-| `name` | Nombre descriptivo |
-| `slug` | Identificador opcional para exposición futura |
-| `eventTypeId` | Event Type aplicado |
-| `lifecycleStatus` | Estado administrativo |
-| `productionPhase` | Fase operativa |
-| `dateStatus` | Estado global de programación |
-| `priority` | Prioridad operativa |
-| `ownerUserId` | Responsable interno principal, cuando exista asignación |
-| `timezone` | Zona horaria principal |
-| `estimatedStartAt` | Inicio global estimado |
-| `estimatedEndAt` | Fin global estimado |
-| `confirmedStartAt` | Inicio global confirmado |
-| `confirmedEndAt` | Fin global confirmado |
-| `briefSummary` | Resumen del trabajo |
-| `briefObjectives` | Objetivos |
-| `briefAudience` | Público objetivo |
-| `briefCreativeDirection` | Dirección creativa |
-| `briefVisualReferences` | Referencias descriptivas |
-| `briefSpecialMoments` | Momentos prioritarios |
-| `briefRestrictions` | Restricciones |
-| `briefTechnicalRequirements` | Requerimientos técnicos |
-| `briefAccessibilityRequirements` | Necesidades de accesibilidad |
-| `briefPrivacyRequirements` | Consideraciones de privacidad |
-| `briefAdditionalNotes` | Información adicional |
-| `cancellationReason` | Motivo de cancelación |
-| `cancelledAt` | Momento de cancelación |
-| `completedAt` | Terminación operativa |
-| `closedAt` | Cierre administrativo |
-| `archivedAt` | Momento de archivo |
-| `createdBy` | Actor creador |
-| `updatedBy` | Último actor modificador |
-| `createdAt` | Momento de creación |
-| `updatedAt` | Última modificación |
-| `version` | Versión de concurrencia optimista |
+| Atributo conceptual              | Descripción                                             |
+| -------------------------------- | ------------------------------------------------------- |
+| `id`                             | Identidad técnica inmutable                             |
+| `code`                           | Código empresarial único e inmutable                    |
+| `name`                           | Nombre descriptivo                                      |
+| `slug`                           | Identificador opcional para exposición futura           |
+| `eventTypeId`                    | Event Type aplicado                                     |
+| `lifecycleStatus`                | Estado administrativo                                   |
+| `productionPhase`                | Fase operativa                                          |
+| `dateStatus`                     | Estado global de programación                           |
+| `priority`                       | Prioridad operativa                                     |
+| `ownerUserId`                    | Responsable interno principal, cuando exista asignación |
+| `timezone`                       | Zona horaria principal                                  |
+| `estimatedStartAt`               | Inicio global estimado                                  |
+| `estimatedEndAt`                 | Fin global estimado                                     |
+| `confirmedStartAt`               | Inicio global confirmado                                |
+| `confirmedEndAt`                 | Fin global confirmado                                   |
+| `briefSummary`                   | Resumen del trabajo                                     |
+| `briefObjectives`                | Objetivos                                               |
+| `briefAudience`                  | Público objetivo                                        |
+| `briefCreativeDirection`         | Dirección creativa                                      |
+| `briefVisualReferences`          | Referencias descriptivas                                |
+| `briefSpecialMoments`            | Momentos prioritarios                                   |
+| `briefRestrictions`              | Restricciones                                           |
+| `briefTechnicalRequirements`     | Requerimientos técnicos                                 |
+| `briefAccessibilityRequirements` | Necesidades de accesibilidad                            |
+| `briefPrivacyRequirements`       | Consideraciones de privacidad                           |
+| `briefAdditionalNotes`           | Información adicional                                   |
+| `cancellationReason`             | Motivo de cancelación                                   |
+| `cancelledAt`                    | Momento de cancelación                                  |
+| `completedAt`                    | Terminación operativa                                   |
+| `closedAt`                       | Cierre administrativo                                   |
+| `archivedAt`                     | Momento de archivo                                      |
+| `createdBy`                      | Actor creador                                           |
+| `updatedBy`                      | Último actor modificador                                |
+| `createdAt`                      | Momento de creación                                     |
+| `updatedAt`                      | Última modificación                                     |
+| `version`                        | Versión de concurrencia optimista                       |
 
 El brief forma parte de Event. No existe una entidad, tabla ni agregado independiente para él.
 
@@ -277,32 +277,32 @@ Etapa temporal importante del Event.
 
 Ejemplos:
 
-| Event Type | EventSessions posibles |
-|---|---|
-| Wedding | Bride Preparation, Groom Preparation, Ceremony, Reception |
-| Music Video | Recording Day 1, Recording Day 2 |
-| Graduation | Ceremony, Photo Session |
-| Corporate | Setup, Conference, Interviews, Closing |
-| Social Content | Planning, Recording Batch, Product Session |
+| Event Type     | EventSessions posibles                                    |
+| -------------- | --------------------------------------------------------- |
+| Wedding        | Bride Preparation, Groom Preparation, Ceremony, Reception |
+| Music Video    | Recording Day 1, Recording Day 2                          |
+| Graduation     | Ceremony, Photo Session                                   |
+| Corporate      | Setup, Conference, Interviews, Closing                    |
+| Social Content | Planning, Recording Batch, Product Session                |
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad de la sesión |
-| `eventId` | Event propietario |
-| `type` | Tipo de sesión |
-| `name` | Nombre operativo |
-| `description` | Descripción |
-| `status` | Estado de la sesión |
-| `dateStatus` | Tentativa o confirmada |
-| `startAt` | Inicio |
-| `endAt` | Fin |
-| `timezone` | Zona horaria IANA |
-| `allDay` | Indica jornada de día completo |
-| `order` | Orden de presentación |
-| `notes` | Observaciones operativas |
-| `createdAt` | Creación |
-| `updatedAt` | Modificación |
-| `version` | Control de concurrencia |
+| Atributo conceptual | Descripción                    |
+| ------------------- | ------------------------------ |
+| `id`                | Identidad de la sesión         |
+| `eventId`           | Event propietario              |
+| `type`              | Tipo de sesión                 |
+| `name`              | Nombre operativo               |
+| `description`       | Descripción                    |
+| `status`            | Estado de la sesión            |
+| `dateStatus`        | Tentativa o confirmada         |
+| `startAt`           | Inicio                         |
+| `endAt`             | Fin                            |
+| `timezone`          | Zona horaria IANA              |
+| `allDay`            | Indica jornada de día completo |
+| `order`             | Orden de presentación          |
+| `notes`             | Observaciones operativas       |
+| `createdAt`         | Creación                       |
+| `updatedAt`         | Modificación                   |
+| `version`           | Control de concurrencia        |
 
 Tipos iniciales orientativos:
 
@@ -331,21 +331,21 @@ Estados:
 
 EventType clasifica y puede inicializar un Event mediante plantillas.
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad |
-| `code` | Código técnico estable |
-| `name` | Nombre visible |
-| `description` | Descripción |
-| `color` | Representación opcional |
-| `icon` | Icono lógico opcional |
-| `isActive` | Habilitado para nuevos Events |
-| `sortOrder` | Orden visible |
-| `defaultTimezone` | Zona horaria sugerida |
-| `defaultPriority` | Prioridad sugerida |
-| `templateVersion` | Versión de su plantilla |
-| `createdAt` | Creación |
-| `updatedAt` | Modificación |
+| Atributo conceptual | Descripción                   |
+| ------------------- | ----------------------------- |
+| `id`                | Identidad                     |
+| `code`              | Código técnico estable        |
+| `name`              | Nombre visible                |
+| `description`       | Descripción                   |
+| `color`             | Representación opcional       |
+| `icon`              | Icono lógico opcional         |
+| `isActive`          | Habilitado para nuevos Events |
+| `sortOrder`         | Orden visible                 |
+| `defaultTimezone`   | Zona horaria sugerida         |
+| `defaultPriority`   | Prioridad sugerida            |
+| `templateVersion`   | Versión de su plantilla       |
+| `createdAt`         | Creación                      |
+| `updatedAt`         | Modificación                  |
 
 Tipos iniciales:
 
@@ -379,27 +379,27 @@ Las plantillas deben versionarse para saber con qué definición fue inicializad
 
 Entidad reutilizable e independiente de un Event específico.
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad |
-| `name` | Nombre oficial o conocido |
-| `type` | Tipo de lugar |
-| `addressLine` | Dirección |
-| `city` | Ciudad |
-| `region` | Departamento o región |
-| `countryCode` | Código de país |
-| `postalCode` | Código postal |
-| `latitude` | Latitud opcional |
-| `longitude` | Longitud opcional |
-| `timezone` | Zona horaria del lugar |
-| `contactName` | Contacto operativo opcional |
-| `contactPhone` | Teléfono operativo opcional |
-| `accessInstructions` | Instrucciones de acceso |
-| `parkingInstructions` | Información de estacionamiento |
-| `technicalNotes` | Condiciones técnicas generales |
-| `isActive` | Disponible para nuevas asignaciones |
-| `createdAt` | Creación |
-| `updatedAt` | Modificación |
+| Atributo conceptual   | Descripción                         |
+| --------------------- | ----------------------------------- |
+| `id`                  | Identidad                           |
+| `name`                | Nombre oficial o conocido           |
+| `type`                | Tipo de lugar                       |
+| `addressLine`         | Dirección                           |
+| `city`                | Ciudad                              |
+| `region`              | Departamento o región               |
+| `countryCode`         | Código de país                      |
+| `postalCode`          | Código postal                       |
+| `latitude`            | Latitud opcional                    |
+| `longitude`           | Longitud opcional                   |
+| `timezone`            | Zona horaria del lugar              |
+| `contactName`         | Contacto operativo opcional         |
+| `contactPhone`        | Teléfono operativo opcional         |
+| `accessInstructions`  | Instrucciones de acceso             |
+| `parkingInstructions` | Información de estacionamiento      |
+| `technicalNotes`      | Condiciones técnicas generales      |
+| `isActive`            | Disponible para nuevas asignaciones |
+| `createdAt`           | Creación                            |
+| `updatedAt`           | Modificación                        |
 
 Una EventSession puede utilizar una o varias Locations y una Location puede reutilizarse en múltiples EventSessions de distintos Events.
 
@@ -409,14 +409,14 @@ La relación entre EventSession y Location podrá conservar información context
 
 Clasificación reutilizable y flexible.
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad |
-| `name` | Nombre visible |
-| `normalizedName` | Nombre normalizado único |
-| `color` | Color opcional |
-| `description` | Significado |
-| `isActive` | Disponible para asignación |
+| Atributo conceptual | Descripción                |
+| ------------------- | -------------------------- |
+| `id`                | Identidad                  |
+| `name`              | Nombre visible             |
+| `normalizedName`    | Nombre normalizado único   |
+| `color`             | Color opcional             |
+| `description`       | Significado                |
+| `isActive`          | Disponible para asignación |
 
 Event y Tag tienen una relación de muchos a muchos. Desactivar un Tag no lo elimina de Events históricos.
 
@@ -426,17 +426,17 @@ Los Tags no reemplazan EventType, Priority, Lifecycle Status ni Production Phase
 
 Registro funcional inmutable de transiciones relevantes.
 
-| Atributo conceptual | Descripción |
-|---|---|
-| `id` | Identidad |
-| `eventId` | Event relacionado |
-| `statusType` | Dimensión modificada |
-| `previousValue` | Valor anterior |
-| `newValue` | Valor nuevo |
-| `reason` | Motivo |
-| `changedBy` | Actor responsable |
-| `changedAt` | Momento del cambio |
-| `metadata` | Contexto adicional limitado |
+| Atributo conceptual | Descripción                 |
+| ------------------- | --------------------------- |
+| `id`                | Identidad                   |
+| `eventId`           | Event relacionado           |
+| `statusType`        | Dimensión modificada        |
+| `previousValue`     | Valor anterior              |
+| `newValue`          | Valor nuevo                 |
+| `reason`            | Motivo                      |
+| `changedBy`         | Actor responsable           |
+| `changedAt`         | Momento del cambio          |
+| `metadata`          | Contexto adicional limitado |
 
 No reemplaza la auditoría técnica global.
 
@@ -556,41 +556,41 @@ Un único campo de estado no representa correctamente el dominio. Se mantienen t
 
 ### 9.1 Lifecycle Status
 
-| Estado | Significado |
-|---|---|
-| `DRAFT` | Expediente incompleto y editable |
-| `ACTIVE` | Evento válido y operativo |
-| `COMPLETED` | Trabajo operativo terminado |
-| `CANCELLED` | Evento cancelado |
-| `CLOSED` | Operación y administración terminadas |
-| `ARCHIVED` | Retirado de la operación diaria |
+| Estado      | Significado                           |
+| ----------- | ------------------------------------- |
+| `DRAFT`     | Expediente incompleto y editable      |
+| `ACTIVE`    | Evento válido y operativo             |
+| `COMPLETED` | Trabajo operativo terminado           |
+| `CANCELLED` | Evento cancelado                      |
+| `CLOSED`    | Operación y administración terminadas |
+| `ARCHIVED`  | Retirado de la operación diaria       |
 
 No existe `DELETED` como estado funcional.
 
 ### 9.2 Production Phase
 
-| Fase | Significado |
-|---|---|
-| `INQUIRY` | Solicitud u oportunidad inicial |
-| `PLANNING` | Definición de alcance y fechas |
-| `PRE_PRODUCTION` | Preparación técnica y creativa |
-| `PRODUCTION` | Fotografía, grabación o rodaje |
-| `POST_PRODUCTION` | Edición y procesamiento |
-| `REVIEW` | Revisión interna o externa |
-| `DELIVERY` | Preparación y entrega |
-| `FINISHED` | Producción finalizada |
+| Fase              | Significado                     |
+| ----------------- | ------------------------------- |
+| `INQUIRY`         | Solicitud u oportunidad inicial |
+| `PLANNING`        | Definición de alcance y fechas  |
+| `PRE_PRODUCTION`  | Preparación técnica y creativa  |
+| `PRODUCTION`      | Fotografía, grabación o rodaje  |
+| `POST_PRODUCTION` | Edición y procesamiento         |
+| `REVIEW`          | Revisión interna o externa      |
+| `DELIVERY`        | Preparación y entrega           |
+| `FINISHED`        | Producción finalizada           |
 
 No todos los EventTypes deben recorrer obligatoriamente todas las fases.
 
 ### 9.3 Date Status
 
-| Estado | Significado |
-|---|---|
-| `UNSCHEDULED` | Sin fechas |
-| `TENTATIVE` | Fechas propuestas |
-| `PARTIALLY_CONFIRMED` | Algunas EventSessions confirmadas |
-| `CONFIRMED` | EventSessions principales confirmadas |
-| `POSTPONED` | Programación suspendida pendiente de nuevas fechas |
+| Estado                | Significado                                        |
+| --------------------- | -------------------------------------------------- |
+| `UNSCHEDULED`         | Sin fechas                                         |
+| `TENTATIVE`           | Fechas propuestas                                  |
+| `PARTIALLY_CONFIRMED` | Algunas EventSessions confirmadas                  |
+| `CONFIRMED`           | EventSessions principales confirmadas              |
+| `POSTPONED`           | Programación suspendida pendiente de nuevas fechas |
 
 ---
 
@@ -819,93 +819,93 @@ La API seguirá contratos versionados bajo `/api/v1`.
 
 ### Events
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `POST` | `/events` | Crear Event |
-| `GET` | `/events` | Listar, buscar y filtrar |
-| `GET` | `/events/:eventId` | Consultar detalle |
-| `PATCH` | `/events/:eventId` | Actualizar información general y brief |
-| `DELETE` | `/events/:eventId` | Eliminar borrador permitido |
-| `POST` | `/events/:eventId/duplicate` | Duplicar como borrador |
+| Método   | Ruta                         | Propósito                              |
+| -------- | ---------------------------- | -------------------------------------- |
+| `POST`   | `/events`                    | Crear Event                            |
+| `GET`    | `/events`                    | Listar, buscar y filtrar               |
+| `GET`    | `/events/:eventId`           | Consultar detalle                      |
+| `PATCH`  | `/events/:eventId`           | Actualizar información general y brief |
+| `DELETE` | `/events/:eventId`           | Eliminar borrador permitido            |
+| `POST`   | `/events/:eventId/duplicate` | Duplicar como borrador                 |
 
 ### Transiciones explícitas
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `POST` | `/events/:eventId/activate` | Activar |
-| `POST` | `/events/:eventId/phase` | Cambiar Production Phase |
-| `POST` | `/events/:eventId/complete` | Completar |
-| `POST` | `/events/:eventId/close` | Cerrar |
-| `POST` | `/events/:eventId/cancel` | Cancelar |
-| `POST` | `/events/:eventId/reactivate` | Reactivar |
-| `POST` | `/events/:eventId/archive` | Archivar |
-| `POST` | `/events/:eventId/unarchive` | Desarchivar |
-| `GET` | `/events/:eventId/status-history` | Consultar historial |
+| Método | Ruta                              | Propósito                |
+| ------ | --------------------------------- | ------------------------ |
+| `POST` | `/events/:eventId/activate`       | Activar                  |
+| `POST` | `/events/:eventId/phase`          | Cambiar Production Phase |
+| `POST` | `/events/:eventId/complete`       | Completar                |
+| `POST` | `/events/:eventId/close`          | Cerrar                   |
+| `POST` | `/events/:eventId/cancel`         | Cancelar                 |
+| `POST` | `/events/:eventId/reactivate`     | Reactivar                |
+| `POST` | `/events/:eventId/archive`        | Archivar                 |
+| `POST` | `/events/:eventId/unarchive`      | Desarchivar              |
+| `GET`  | `/events/:eventId/status-history` | Consultar historial      |
 
 Los estados no se modificarán directamente mediante un `PATCH` genérico.
 
 ### EventSessions
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `POST` | `/events/:eventId/sessions` | Crear EventSession |
-| `GET` | `/events/:eventId/sessions` | Listar EventSessions |
-| `GET` | `/events/:eventId/sessions/:sessionId` | Consultar detalle |
-| `PATCH` | `/events/:eventId/sessions/:sessionId` | Actualizar |
-| `DELETE` | `/events/:eventId/sessions/:sessionId` | Eliminar cuando sea permitido |
-| `POST` | `/events/:eventId/sessions/:sessionId/confirm` | Confirmar |
-| `POST` | `/events/:eventId/sessions/:sessionId/reschedule` | Reprogramar |
-| `POST` | `/events/:eventId/sessions/:sessionId/postpone` | Posponer |
-| `POST` | `/events/:eventId/sessions/:sessionId/start` | Iniciar |
-| `POST` | `/events/:eventId/sessions/:sessionId/complete` | Completar |
-| `POST` | `/events/:eventId/sessions/:sessionId/cancel` | Cancelar |
-| `POST` | `/events/:eventId/sessions/reorder` | Reordenar |
+| Método   | Ruta                                              | Propósito                     |
+| -------- | ------------------------------------------------- | ----------------------------- |
+| `POST`   | `/events/:eventId/sessions`                       | Crear EventSession            |
+| `GET`    | `/events/:eventId/sessions`                       | Listar EventSessions          |
+| `GET`    | `/events/:eventId/sessions/:sessionId`            | Consultar detalle             |
+| `PATCH`  | `/events/:eventId/sessions/:sessionId`            | Actualizar                    |
+| `DELETE` | `/events/:eventId/sessions/:sessionId`            | Eliminar cuando sea permitido |
+| `POST`   | `/events/:eventId/sessions/:sessionId/confirm`    | Confirmar                     |
+| `POST`   | `/events/:eventId/sessions/:sessionId/reschedule` | Reprogramar                   |
+| `POST`   | `/events/:eventId/sessions/:sessionId/postpone`   | Posponer                      |
+| `POST`   | `/events/:eventId/sessions/:sessionId/start`      | Iniciar                       |
+| `POST`   | `/events/:eventId/sessions/:sessionId/complete`   | Completar                     |
+| `POST`   | `/events/:eventId/sessions/:sessionId/cancel`     | Cancelar                      |
+| `POST`   | `/events/:eventId/sessions/reorder`               | Reordenar                     |
 
 ### Session Locations
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `POST` | `/events/:eventId/sessions/:sessionId/locations` | Asociar Location |
-| `GET` | `/events/:eventId/sessions/:sessionId/locations` | Listar Locations |
-| `PATCH` | `/events/:eventId/sessions/:sessionId/locations/:locationId` | Actualizar contexto |
-| `DELETE` | `/events/:eventId/sessions/:sessionId/locations/:locationId` | Retirar asociación |
+| Método   | Ruta                                                         | Propósito           |
+| -------- | ------------------------------------------------------------ | ------------------- |
+| `POST`   | `/events/:eventId/sessions/:sessionId/locations`             | Asociar Location    |
+| `GET`    | `/events/:eventId/sessions/:sessionId/locations`             | Listar Locations    |
+| `PATCH`  | `/events/:eventId/sessions/:sessionId/locations/:locationId` | Actualizar contexto |
+| `DELETE` | `/events/:eventId/sessions/:sessionId/locations/:locationId` | Retirar asociación  |
 
 ### EventTypes y plantillas
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `GET` | `/event-types` | Listar EventTypes |
-| `POST` | `/event-types` | Crear EventType |
-| `PATCH` | `/event-types/:eventTypeId` | Actualizar |
-| `POST` | `/event-types/:eventTypeId/activate` | Activar |
-| `POST` | `/event-types/:eventTypeId/deactivate` | Desactivar |
-| `GET` | `/event-types/:eventTypeId/template` | Consultar plantilla vigente |
-| `PUT` | `/event-types/:eventTypeId/template` | Publicar nueva versión de plantilla |
+| Método  | Ruta                                   | Propósito                           |
+| ------- | -------------------------------------- | ----------------------------------- |
+| `GET`   | `/event-types`                         | Listar EventTypes                   |
+| `POST`  | `/event-types`                         | Crear EventType                     |
+| `PATCH` | `/event-types/:eventTypeId`            | Actualizar                          |
+| `POST`  | `/event-types/:eventTypeId/activate`   | Activar                             |
+| `POST`  | `/event-types/:eventTypeId/deactivate` | Desactivar                          |
+| `GET`   | `/event-types/:eventTypeId/template`   | Consultar plantilla vigente         |
+| `PUT`   | `/event-types/:eventTypeId/template`   | Publicar nueva versión de plantilla |
 
 ### Locations
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `POST` | `/locations` | Crear Location |
-| `GET` | `/locations` | Buscar y listar |
-| `GET` | `/locations/:locationId` | Consultar |
-| `PATCH` | `/locations/:locationId` | Actualizar |
-| `POST` | `/locations/:locationId/activate` | Activar |
-| `POST` | `/locations/:locationId/deactivate` | Desactivar |
+| Método  | Ruta                                | Propósito       |
+| ------- | ----------------------------------- | --------------- |
+| `POST`  | `/locations`                        | Crear Location  |
+| `GET`   | `/locations`                        | Buscar y listar |
+| `GET`   | `/locations/:locationId`            | Consultar       |
+| `PATCH` | `/locations/:locationId`            | Actualizar      |
+| `POST`  | `/locations/:locationId/activate`   | Activar         |
+| `POST`  | `/locations/:locationId/deactivate` | Desactivar      |
 
 ### Tags — capacidad futura
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `GET` | `/tags` | Buscar Tags |
-| `POST` | `/events/:eventId/tags` | Asignar Tag |
+| Método   | Ruta                           | Propósito   |
+| -------- | ------------------------------ | ----------- |
+| `GET`    | `/tags`                        | Buscar Tags |
+| `POST`   | `/events/:eventId/tags`        | Asignar Tag |
 | `DELETE` | `/events/:eventId/tags/:tagId` | Retirar Tag |
 
 ### Timeline — proyección futura
 
-| Método | Ruta | Propósito |
-|---|---|---|
-| `GET` | `/events/:eventId/timeline` | Obtener proyección cronológica |
+| Método | Ruta                        | Propósito                      |
+| ------ | --------------------------- | ------------------------------ |
+| `GET`  | `/events/:eventId/timeline` | Obtener proyección cronológica |
 
 ---
 

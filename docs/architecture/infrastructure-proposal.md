@@ -48,20 +48,20 @@ No se implementarán todavía módulos como clientes, producciones, proyectos, i
 
 ### 3.1 Tecnologías obligatorias
 
-| Componente | Tecnología propuesta | Propósito |
-|---|---|---|
-| Runtime | Node.js 24 LTS | Ejecución estable y con soporte prolongado |
-| Framework | NestJS 11, última versión estable | API modular y empresarial |
-| Lenguaje | TypeScript en modo estricto | Seguridad de tipos y mantenibilidad |
-| Base de datos | PostgreSQL 18 | Persistencia relacional robusta |
-| ORM | Prisma ORM 7 | Acceso tipado, migraciones y modelado |
-| API | REST versionada | Contrato HTTP predecible |
-| Documentación | Swagger/OpenAPI | Descubrimiento y prueba del API |
-| Autenticación | JWT + refresh tokens rotatorios | Sesiones seguras |
-| Contenedores | Docker + Docker Compose | Entornos reproducibles |
-| Calidad | ESLint + Prettier | Estándares automáticos de código |
-| Hooks Git | Husky + lint-staged + commitlint | Validación antes de confirmar cambios |
-| Pruebas | Jest + Supertest | Pruebas unitarias, integración y E2E |
+| Componente    | Tecnología propuesta              | Propósito                                  |
+| ------------- | --------------------------------- | ------------------------------------------ |
+| Runtime       | Node.js 24 LTS                    | Ejecución estable y con soporte prolongado |
+| Framework     | NestJS 11, última versión estable | API modular y empresarial                  |
+| Lenguaje      | TypeScript en modo estricto       | Seguridad de tipos y mantenibilidad        |
+| Base de datos | PostgreSQL 18                     | Persistencia relacional robusta            |
+| ORM           | Prisma ORM 7                      | Acceso tipado, migraciones y modelado      |
+| API           | REST versionada                   | Contrato HTTP predecible                   |
+| Documentación | Swagger/OpenAPI                   | Descubrimiento y prueba del API            |
+| Autenticación | JWT + refresh tokens rotatorios   | Sesiones seguras                           |
+| Contenedores  | Docker + Docker Compose           | Entornos reproducibles                     |
+| Calidad       | ESLint + Prettier                 | Estándares automáticos de código           |
+| Hooks Git     | Husky + lint-staged + commitlint  | Validación antes de confirmar cambios      |
+| Pruebas       | Jest + Supertest                  | Pruebas unitarias, integración y E2E       |
 
 ### 3.2 Versiones recomendadas
 
@@ -459,12 +459,12 @@ Se aplicará una política global configurable y reglas específicas para rutas 
 
 Ejemplo conceptual:
 
-| Tipo de ruta | Política inicial |
-|---|---|
-| API general | Límite moderado por IP |
+| Tipo de ruta     | Política inicial                |
+| ---------------- | ------------------------------- |
+| API general      | Límite moderado por IP          |
 | Inicio de sesión | Límite estricto por IP y cuenta |
-| Renovación | Límite estricto por sesión/IP |
-| Health checks | Política diferenciada |
+| Renovación       | Límite estricto por sesión/IP   |
+| Health checks    | Política diferenciada           |
 
 Los valores exactos serán variables de entorno. Si la aplicación escala horizontalmente, el almacenamiento del rate limiter deberá migrarse desde memoria a un almacén compartido, normalmente Redis.
 
@@ -636,11 +636,11 @@ No se recomienda implementar todavía un modelo multitenant sin conocer las regl
 
 Las alternativas posibles son:
 
-| Estrategia | Ventajas | Costes |
-|---|---|---|
+| Estrategia                         | Ventajas                        | Costes                                      |
+| ---------------------------------- | ------------------------------- | ------------------------------------------- |
 | Tablas compartidas con `tenant_id` | Eficiencia y operación sencilla | Requiere disciplina estricta de aislamiento |
-| Esquema por tenant | Mayor separación lógica | Migraciones y operación más complejas |
-| Base de datos por tenant | Máximo aislamiento | Mayor coste y complejidad operativa |
+| Esquema por tenant                 | Mayor separación lógica         | Migraciones y operación más complejas       |
+| Base de datos por tenant           | Máximo aislamiento              | Mayor coste y complejidad operativa         |
 
 La arquitectura modular dejará un punto de extensión para resolver el contexto de tenant, pero no se creará una abstracción ficticia antes de definir:
 

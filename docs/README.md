@@ -8,4 +8,3 @@ La documentación oficial se organiza por nivel de autoridad:
 4. [`architecture/infrastructure-proposal.md`](architecture/infrastructure-proposal.md): antecedente técnico aprobado para la infraestructura.
 
 Las decisiones transversales nuevas deben registrarse en el capítulo ADR del Platform Blueprint antes de contradecir una decisión vigente.
-

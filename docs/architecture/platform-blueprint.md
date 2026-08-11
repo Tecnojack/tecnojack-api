@@ -131,38 +131,38 @@ Backend, Angular, Figma y automatizaciones comparten lenguaje y contratos versio
 
 ## 5. Lenguaje ubicuo global de TECNOJACK
 
-| Término | Definición oficial |
-|---|---|
-| Event | Expediente central de un proyecto audiovisual y Aggregate Root principal del negocio |
-| Event Type | Clasificación y plantilla versionada para inicializar Events |
-| Event Session | Etapa temporal importante de un Event |
-| Person | Individuo cuya identidad y datos son propiedad de PEOPLE |
-| Organization | Entidad colectiva representada y administrada por PEOPLE |
-| Participant | Persona u organización relacionada con un Event mediante uno o varios roles contextuales |
-| Client | Rol comercial contextual; no es el propietario ni la raíz de Event |
-| Contact | Persona o canal usado para comunicación en un contexto determinado |
-| Lead | Interés comercial todavía no calificado, propiedad de CRM |
-| Opportunity | Posibilidad comercial calificada que puede originar un Event |
-| Contract | Acuerdo formal que define alcance, obligaciones, derechos y aceptación |
-| Payment | Obligación o movimiento financiero asociado a Event o Contract |
-| Production | Ejecución coordinada del trabajo humano, técnico y operativo |
-| Team Member | Persona interna o colaboradora asignada a una función productiva |
-| Media Asset | Archivo audiovisual individual y sus metadatos administrados por MEDIA |
-| Storage Object | Representación técnica de bytes persistidos mediante STORAGE |
-| Gallery | Colección curada de Media Assets para selección, revisión o publicación |
-| Deliverable | Resultado comprometido, producido, aprobado o entregado para un Event |
-| Invitation | Experiencia de invitación vinculada a un Event y sus destinatarios |
-| Checklist | Lista contextual de Items completables vinculada a un Event |
-| Timeline | Proyección cronológica de hechos procedentes de varios módulos |
-| Notification | Comunicación que el sistema intenta entregar a un destinatario mediante un canal |
-| Automation | Regla que reacciona a un hecho y solicita una acción permitida |
-| Content | Material editorial administrado por CMS para publicación |
-| BackOffice | Experiencia interna de operación; no es propietario de datos de dominio |
-| Client Portal | Experiencia externa con acceso limitado por participación y visibilidad |
-| Setting | Configuración administrable que modifica comportamiento dentro de límites permitidos |
-| Audit Record | Evidencia inmutable de una acción sensible o cambio relevante |
-| Domain Event | Hecho pasado e inmutable publicado por el módulo propietario |
-| Projection | Modelo de lectura derivado de fuentes de verdad propietarias |
+| Término        | Definición oficial                                                                       |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| Event          | Expediente central de un proyecto audiovisual y Aggregate Root principal del negocio     |
+| Event Type     | Clasificación y plantilla versionada para inicializar Events                             |
+| Event Session  | Etapa temporal importante de un Event                                                    |
+| Person         | Individuo cuya identidad y datos son propiedad de PEOPLE                                 |
+| Organization   | Entidad colectiva representada y administrada por PEOPLE                                 |
+| Participant    | Persona u organización relacionada con un Event mediante uno o varios roles contextuales |
+| Client         | Rol comercial contextual; no es el propietario ni la raíz de Event                       |
+| Contact        | Persona o canal usado para comunicación en un contexto determinado                       |
+| Lead           | Interés comercial todavía no calificado, propiedad de CRM                                |
+| Opportunity    | Posibilidad comercial calificada que puede originar un Event                             |
+| Contract       | Acuerdo formal que define alcance, obligaciones, derechos y aceptación                   |
+| Payment        | Obligación o movimiento financiero asociado a Event o Contract                           |
+| Production     | Ejecución coordinada del trabajo humano, técnico y operativo                             |
+| Team Member    | Persona interna o colaboradora asignada a una función productiva                         |
+| Media Asset    | Archivo audiovisual individual y sus metadatos administrados por MEDIA                   |
+| Storage Object | Representación técnica de bytes persistidos mediante STORAGE                             |
+| Gallery        | Colección curada de Media Assets para selección, revisión o publicación                  |
+| Deliverable    | Resultado comprometido, producido, aprobado o entregado para un Event                    |
+| Invitation     | Experiencia de invitación vinculada a un Event y sus destinatarios                       |
+| Checklist      | Lista contextual de Items completables vinculada a un Event                              |
+| Timeline       | Proyección cronológica de hechos procedentes de varios módulos                           |
+| Notification   | Comunicación que el sistema intenta entregar a un destinatario mediante un canal         |
+| Automation     | Regla que reacciona a un hecho y solicita una acción permitida                           |
+| Content        | Material editorial administrado por CMS para publicación                                 |
+| BackOffice     | Experiencia interna de operación; no es propietario de datos de dominio                  |
+| Client Portal  | Experiencia externa con acceso limitado por participación y visibilidad                  |
+| Setting        | Configuración administrable que modifica comportamiento dentro de límites permitidos     |
+| Audit Record   | Evidencia inmutable de una acción sensible o cambio relevante                            |
+| Domain Event   | Hecho pasado e inmutable publicado por el módulo propietario                             |
+| Projection     | Modelo de lectura derivado de fuentes de verdad propietarias                             |
 
 Las especificaciones de dominio pueden ampliar este lenguaje, pero no redefinir sus términos globales sin un nuevo ADR.
 
@@ -172,46 +172,46 @@ Las especificaciones de dominio pueden ampliar este lenguaje, pero no redefinir 
 
 ### 6.1 Core Domains
 
-| Dominio | Razón |
-|---|---|
-| EVENTS | Organiza el expediente central del trabajo audiovisual |
-| PRODUCTION | Coordina la ejecución creativa, humana, técnica y temporal |
-| MEDIA | Gestiona el activo audiovisual que constituye el producto principal |
-| GALLERY | Convierte medios en experiencias de revisión, selección y presentación |
-| DELIVERABLES | Controla compromisos, versiones, aprobación y entrega final |
+| Dominio      | Razón                                                                  |
+| ------------ | ---------------------------------------------------------------------- |
+| EVENTS       | Organiza el expediente central del trabajo audiovisual                 |
+| PRODUCTION   | Coordina la ejecución creativa, humana, técnica y temporal             |
+| MEDIA        | Gestiona el activo audiovisual que constituye el producto principal    |
+| GALLERY      | Convierte medios en experiencias de revisión, selección y presentación |
+| DELIVERABLES | Controla compromisos, versiones, aprobación y entrega final            |
 
 Estos dominios representan la operación diferenciadora de TECNOJACK. Su lenguaje y reglas requieren diseño propio.
 
 ### 6.2 Supporting Domains
 
-| Dominio | Razón |
-|---|---|
-| PEOPLE | Proporciona identidad de personas y organizaciones a todos los contextos |
-| CRM | Gestiona la relación comercial antes y alrededor del Event |
-| CONTRACTS | Formaliza alcance, derechos y obligaciones |
-| PAYMENTS | Gestiona el estado financiero de la relación |
-| INVITATIONS | Amplía la experiencia de determinados Events |
-| CMS | Publica contenido editorial y material autorizado |
-| NOTIFICATIONS | Ejecuta comunicaciones derivadas del negocio |
-| AUTOMATION | Coordina acciones repetibles entre capacidades existentes |
-| ANALYTICS | Produce métricas y proyecciones para decisiones |
-| CLIENT PORTAL | Expone capacidades autorizadas a participantes externos |
-| BACKOFFICE | Compone capacidades para la operación interna |
+| Dominio       | Razón                                                                    |
+| ------------- | ------------------------------------------------------------------------ |
+| PEOPLE        | Proporciona identidad de personas y organizaciones a todos los contextos |
+| CRM           | Gestiona la relación comercial antes y alrededor del Event               |
+| CONTRACTS     | Formaliza alcance, derechos y obligaciones                               |
+| PAYMENTS      | Gestiona el estado financiero de la relación                             |
+| INVITATIONS   | Amplía la experiencia de determinados Events                             |
+| CMS           | Publica contenido editorial y material autorizado                        |
+| NOTIFICATIONS | Ejecuta comunicaciones derivadas del negocio                             |
+| AUTOMATION    | Coordina acciones repetibles entre capacidades existentes                |
+| ANALYTICS     | Produce métricas y proyecciones para decisiones                          |
+| CLIENT PORTAL | Expone capacidades autorizadas a participantes externos                  |
+| BACKOFFICE    | Compone capacidades para la operación interna                            |
 
 Son esenciales para la plataforma completa, pero soportan el núcleo audiovisual.
 
 ### 6.3 Generic Domains
 
-| Dominio | Razón |
-|---|---|
-| AUTH | Autenticación y sesiones son capacidades transversales conocidas |
-| USERS | Identidad de cuenta y acceso al sistema |
-| ROLES | Agrupación administrativa de permisos |
-| PERMISSIONS | Autorización granular y alcance |
-| SYSTEM | Salud, versión, diagnóstico y capacidades operativas |
-| SETTINGS | Configuración administrable |
-| STORAGE | Abstracción de almacenamiento de objetos |
-| AUDIT | Evidencia transversal de acciones sensibles |
+| Dominio     | Razón                                                            |
+| ----------- | ---------------------------------------------------------------- |
+| AUTH        | Autenticación y sesiones son capacidades transversales conocidas |
+| USERS       | Identidad de cuenta y acceso al sistema                          |
+| ROLES       | Agrupación administrativa de permisos                            |
+| PERMISSIONS | Autorización granular y alcance                                  |
+| SYSTEM      | Salud, versión, diagnóstico y capacidades operativas             |
+| SETTINGS    | Configuración administrable                                      |
+| STORAGE     | Abstracción de almacenamiento de objetos                         |
+| AUDIT       | Evidencia transversal de acciones sensibles                      |
 
 Son capacidades genéricas necesarias, pero no diferenciadoras del negocio audiovisual.
 
@@ -506,28 +506,28 @@ Las flechas significan uso de una capacidad pública, no ownership ni acceso a t
 
 Leyenda: **O** propietario/crea/modifica, **C** consulta mediante capacidad pública, **P** proyecta, **—** sin acceso ordinario.
 
-| Dato | Propietario | Puede modificar | Consulta autorizada | Nunca accede directamente |
-|---|---|---|---|---|
-| Credenciales y sesiones | AUTH | AUTH | SYSTEM/AUDIT de forma limitada | Dominios de negocio |
-| Cuenta de usuario | USERS | USERS | AUTH, ROLES, PERMISSIONS | Módulos mediante tablas |
-| Persona/organización | PEOPLE | PEOPLE | CRM, EVENTS, contratos, portal | STORAGE |
-| Lead/Opportunity | CRM | CRM | BACKOFFICE, ANALYTICS | MEDIA/GALLERY |
-| Event | EVENTS | EVENTS | Módulos dependientes y experiencias | Otros repositorios |
-| EventSession | EVENTS | EVENTS | PRODUCTION, MEDIA, portal autorizado | PAYMENTS |
-| Contract | CONTRACTS | CONTRACTS | EVENTS, PAYMENTS, portal | GALLERY/MEDIA |
-| Payment | PAYMENTS | PAYMENTS | CONTRACTS, EVENTS, portal limitado | MEDIA/CMS |
-| ProductionPlan/Assignment | PRODUCTION | PRODUCTION | EVENTS, BACKOFFICE | PAYMENTS |
-| MediaAsset | MEDIA | MEDIA | GALLERY, DELIVERABLES, CMS autorizado | CRM |
-| Bytes/StorageObject | STORAGE | STORAGE | MEDIA mediante proveedor abstracto | UI y dominios comerciales |
-| Gallery | GALLERY | GALLERY | EVENTS, portal, DELIVERABLES | PAYMENTS |
-| Deliverable | DELIVERABLES | DELIVERABLES | EVENTS, contratos, portal | AUTH |
-| Invitation | INVITATIONS | INVITATIONS | EVENTS, portal | PAYMENTS |
-| Notification | NOTIFICATIONS | NOTIFICATIONS | módulo origen y AUDIT limitado | MEDIA bruto |
-| Content editorial | CMS | CMS | sitio público/BackOffice | PAYMENTS |
-| Setting | SETTINGS | SETTINGS | módulos autorizados | cliente externo sin permiso |
-| AutomationRule | AUTOMATION | AUTOMATION | BackOffice/AUDIT | tablas de dominio |
-| Projection analítica | ANALYTICS | ANALYTICS | BackOffice autorizado | flujo operacional como fuente |
-| AuditRecord | AUDIT | AUDIT por append | seguridad/administración | usuarios ordinarios |
+| Dato                      | Propietario   | Puede modificar  | Consulta autorizada                   | Nunca accede directamente     |
+| ------------------------- | ------------- | ---------------- | ------------------------------------- | ----------------------------- |
+| Credenciales y sesiones   | AUTH          | AUTH             | SYSTEM/AUDIT de forma limitada        | Dominios de negocio           |
+| Cuenta de usuario         | USERS         | USERS            | AUTH, ROLES, PERMISSIONS              | Módulos mediante tablas       |
+| Persona/organización      | PEOPLE        | PEOPLE           | CRM, EVENTS, contratos, portal        | STORAGE                       |
+| Lead/Opportunity          | CRM           | CRM              | BACKOFFICE, ANALYTICS                 | MEDIA/GALLERY                 |
+| Event                     | EVENTS        | EVENTS           | Módulos dependientes y experiencias   | Otros repositorios            |
+| EventSession              | EVENTS        | EVENTS           | PRODUCTION, MEDIA, portal autorizado  | PAYMENTS                      |
+| Contract                  | CONTRACTS     | CONTRACTS        | EVENTS, PAYMENTS, portal              | GALLERY/MEDIA                 |
+| Payment                   | PAYMENTS      | PAYMENTS         | CONTRACTS, EVENTS, portal limitado    | MEDIA/CMS                     |
+| ProductionPlan/Assignment | PRODUCTION    | PRODUCTION       | EVENTS, BACKOFFICE                    | PAYMENTS                      |
+| MediaAsset                | MEDIA         | MEDIA            | GALLERY, DELIVERABLES, CMS autorizado | CRM                           |
+| Bytes/StorageObject       | STORAGE       | STORAGE          | MEDIA mediante proveedor abstracto    | UI y dominios comerciales     |
+| Gallery                   | GALLERY       | GALLERY          | EVENTS, portal, DELIVERABLES          | PAYMENTS                      |
+| Deliverable               | DELIVERABLES  | DELIVERABLES     | EVENTS, contratos, portal             | AUTH                          |
+| Invitation                | INVITATIONS   | INVITATIONS      | EVENTS, portal                        | PAYMENTS                      |
+| Notification              | NOTIFICATIONS | NOTIFICATIONS    | módulo origen y AUDIT limitado        | MEDIA bruto                   |
+| Content editorial         | CMS           | CMS              | sitio público/BackOffice              | PAYMENTS                      |
+| Setting                   | SETTINGS      | SETTINGS         | módulos autorizados                   | cliente externo sin permiso   |
+| AutomationRule            | AUTOMATION    | AUTOMATION       | BackOffice/AUDIT                      | tablas de dominio             |
+| Projection analítica      | ANALYTICS     | ANALYTICS        | BackOffice autorizado                 | flujo operacional como fuente |
+| AuditRecord               | AUDIT         | AUDIT por append | seguridad/administración              | usuarios ordinarios           |
 
 ---
 
@@ -591,25 +591,25 @@ El flujo admite excepciones: un Event puede crearse antes de una Opportunity for
 
 ## 11. Mapa de integraciones
 
-| Origen | Destino | Interacción |
-|---|---|---|
-| CRM | PEOPLE | Crear o vincular identidad |
-| CRM | EVENTS | Solicitar creación o vincular Event a Opportunity |
-| EVENTS | PEOPLE | Resolver Participants y roles, cuando exista esa capacidad |
-| CONTRACTS | EVENTS | Referenciar Event y consultar contexto permitido |
-| CONTRACTS | PEOPLE | Resolver partes contractuales |
-| PAYMENTS | CONTRACTS | Crear obligaciones derivadas |
-| PRODUCTION | EVENTS | Planificar desde EventSessions confirmadas |
-| MEDIA | EVENTS | Asociar activos con Event y EventSession |
-| MEDIA | STORAGE | Persistir y recuperar bytes mediante StorageProvider |
-| GALLERY | MEDIA | Curar referencias a Media Assets |
-| DELIVERABLES | CONTRACTS | Derivar compromisos acordados |
-| DELIVERABLES | MEDIA/GALLERY | Componer y publicar entrega |
-| CLIENT PORTAL | módulos propietarios | Consultar o emitir comandos autorizados |
-| NOTIFICATIONS | PEOPLE | Resolver destinatarios y preferencias |
-| AUTOMATION | módulos propietarios | Solicitar comandos públicos después de un trigger |
-| ANALYTICS | eventos/proyecciones | Construir métricas regenerables |
-| AUDIT | todos | Registrar acciones clasificadas como sensibles |
+| Origen        | Destino              | Interacción                                                |
+| ------------- | -------------------- | ---------------------------------------------------------- |
+| CRM           | PEOPLE               | Crear o vincular identidad                                 |
+| CRM           | EVENTS               | Solicitar creación o vincular Event a Opportunity          |
+| EVENTS        | PEOPLE               | Resolver Participants y roles, cuando exista esa capacidad |
+| CONTRACTS     | EVENTS               | Referenciar Event y consultar contexto permitido           |
+| CONTRACTS     | PEOPLE               | Resolver partes contractuales                              |
+| PAYMENTS      | CONTRACTS            | Crear obligaciones derivadas                               |
+| PRODUCTION    | EVENTS               | Planificar desde EventSessions confirmadas                 |
+| MEDIA         | EVENTS               | Asociar activos con Event y EventSession                   |
+| MEDIA         | STORAGE              | Persistir y recuperar bytes mediante StorageProvider       |
+| GALLERY       | MEDIA                | Curar referencias a Media Assets                           |
+| DELIVERABLES  | CONTRACTS            | Derivar compromisos acordados                              |
+| DELIVERABLES  | MEDIA/GALLERY        | Componer y publicar entrega                                |
+| CLIENT PORTAL | módulos propietarios | Consultar o emitir comandos autorizados                    |
+| NOTIFICATIONS | PEOPLE               | Resolver destinatarios y preferencias                      |
+| AUTOMATION    | módulos propietarios | Solicitar comandos públicos después de un trigger          |
+| ANALYTICS     | eventos/proyecciones | Construir métricas regenerables                            |
+| AUDIT         | todos                | Registrar acciones clasificadas como sensibles             |
 
 ---
 
@@ -617,23 +617,23 @@ El flujo admite excepciones: un Event puede crearse antes de una Opportunity for
 
 Los nombres expresan hechos pasados. El payload público debe ser mínimo, versionado y no contener secretos ni datos personales innecesarios.
 
-| Dominio | Eventos principales |
-|---|---|
-| AUTH/USERS | `UserCreated`, `UserAuthenticated`, `SessionRevoked`, `UserDisabled` |
-| PEOPLE | `PersonCreated`, `PersonUpdated`, `PersonMerged`, `OrganizationCreated` |
-| CRM | `LeadCreated`, `LeadQualified`, `OpportunityWon`, `OpportunityLost` |
-| EVENTS | `EventCreated`, `EventActivated`, `EventSessionConfirmed`, `EventProductionPhaseChanged`, `EventCompleted`, `EventCancelled`, `EventClosed` |
-| CONTRACTS | `ContractCreated`, `ContractSent`, `ContractSigned`, `ContractCancelled` |
-| PAYMENTS | `PaymentRequested`, `PaymentReceived`, `PaymentFailed`, `PaymentRefunded`, `BalanceSettled` |
-| PRODUCTION | `ProductionPlanCreated`, `TeamMemberAssigned`, `ProductionStarted`, `ProductionCompleted` |
-| MEDIA | `MediaAssetRegistered`, `MediaAssetUploaded`, `MediaProcessingCompleted`, `MediaAssetRejected` |
-| GALLERY | `GalleryCreated`, `GalleryPublished`, `GallerySelectionSubmitted` |
-| DELIVERABLES | `DeliverableDefined`, `DeliverableReady`, `DeliverableDelivered`, `DeliverableApproved` |
-| INVITATIONS | `InvitationPublished`, `InvitationSent`, `InvitationConfirmed`, `InvitationDeclined` |
-| CMS | `ContentPublished`, `ContentUnpublished` |
-| NOTIFICATIONS | `NotificationQueued`, `NotificationDelivered`, `NotificationFailed` |
-| AUTOMATION | `AutomationTriggered`, `AutomationCompleted`, `AutomationFailed` |
-| STORAGE | `StorageObjectCreated`, `StorageObjectDeleted`, `StorageOperationFailed` |
+| Dominio       | Eventos principales                                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| AUTH/USERS    | `UserCreated`, `UserAuthenticated`, `SessionRevoked`, `UserDisabled`                                                                        |
+| PEOPLE        | `PersonCreated`, `PersonUpdated`, `PersonMerged`, `OrganizationCreated`                                                                     |
+| CRM           | `LeadCreated`, `LeadQualified`, `OpportunityWon`, `OpportunityLost`                                                                         |
+| EVENTS        | `EventCreated`, `EventActivated`, `EventSessionConfirmed`, `EventProductionPhaseChanged`, `EventCompleted`, `EventCancelled`, `EventClosed` |
+| CONTRACTS     | `ContractCreated`, `ContractSent`, `ContractSigned`, `ContractCancelled`                                                                    |
+| PAYMENTS      | `PaymentRequested`, `PaymentReceived`, `PaymentFailed`, `PaymentRefunded`, `BalanceSettled`                                                 |
+| PRODUCTION    | `ProductionPlanCreated`, `TeamMemberAssigned`, `ProductionStarted`, `ProductionCompleted`                                                   |
+| MEDIA         | `MediaAssetRegistered`, `MediaAssetUploaded`, `MediaProcessingCompleted`, `MediaAssetRejected`                                              |
+| GALLERY       | `GalleryCreated`, `GalleryPublished`, `GallerySelectionSubmitted`                                                                           |
+| DELIVERABLES  | `DeliverableDefined`, `DeliverableReady`, `DeliverableDelivered`, `DeliverableApproved`                                                     |
+| INVITATIONS   | `InvitationPublished`, `InvitationSent`, `InvitationConfirmed`, `InvitationDeclined`                                                        |
+| CMS           | `ContentPublished`, `ContentUnpublished`                                                                                                    |
+| NOTIFICATIONS | `NotificationQueued`, `NotificationDelivered`, `NotificationFailed`                                                                         |
+| AUTOMATION    | `AutomationTriggered`, `AutomationCompleted`, `AutomationFailed`                                                                            |
+| STORAGE       | `StorageObjectCreated`, `StorageObjectDeleted`, `StorageOperationFailed`                                                                    |
 
 ### Reglas globales
 
@@ -651,29 +651,29 @@ Los nombres expresan hechos pasados. El payload público debe ser mínimo, versi
 
 Esta sección define familias de capacidades, no rutas técnicas definitivas.
 
-| Módulo | Capacidades públicas |
-|---|---|
-| AUTH | iniciar, renovar y revocar sesión; validar identidad autenticada |
-| USERS | crear, activar, desactivar y consultar cuentas |
-| ROLES/PERMISSIONS | administrar roles, grants y resolver autorización |
-| PEOPLE | crear, buscar, actualizar y vincular personas/organizaciones |
-| CRM | administrar Leads, Opportunities y actividades comerciales |
-| EVENTS | administrar Events, EventSessions, estados, tipos y proyecciones |
-| CONTRACTS | crear, versionar, enviar, firmar, cancelar y consultar Contracts |
-| PAYMENTS | crear obligaciones, registrar movimientos y consultar estado financiero |
-| PRODUCTION | planificar, asignar, ejecutar y completar producción |
-| MEDIA | registrar, cargar, procesar y consultar Media Assets |
-| GALLERY | crear, curar, publicar y recibir selecciones |
-| DELIVERABLES | definir, preparar, entregar y aprobar entregables |
-| INVITATIONS | diseñar, publicar, distribuir y registrar confirmaciones |
-| CMS | administrar y publicar contenido autorizado |
-| NOTIFICATIONS | solicitar, consultar y reintentar comunicaciones |
-| SETTINGS | consultar y cambiar configuración permitida |
-| AUTOMATION | definir, activar y observar reglas automáticas |
-| ANALYTICS | consultar métricas y reportes autorizados |
-| STORAGE | operaciones internas de objetos mediante StorageProvider |
-| AUDIT | consultar evidencia bajo permiso restringido |
-| SYSTEM | salud, versión, diagnóstico y configuración efectiva segura |
+| Módulo            | Capacidades públicas                                                    |
+| ----------------- | ----------------------------------------------------------------------- |
+| AUTH              | iniciar, renovar y revocar sesión; validar identidad autenticada        |
+| USERS             | crear, activar, desactivar y consultar cuentas                          |
+| ROLES/PERMISSIONS | administrar roles, grants y resolver autorización                       |
+| PEOPLE            | crear, buscar, actualizar y vincular personas/organizaciones            |
+| CRM               | administrar Leads, Opportunities y actividades comerciales              |
+| EVENTS            | administrar Events, EventSessions, estados, tipos y proyecciones        |
+| CONTRACTS         | crear, versionar, enviar, firmar, cancelar y consultar Contracts        |
+| PAYMENTS          | crear obligaciones, registrar movimientos y consultar estado financiero |
+| PRODUCTION        | planificar, asignar, ejecutar y completar producción                    |
+| MEDIA             | registrar, cargar, procesar y consultar Media Assets                    |
+| GALLERY           | crear, curar, publicar y recibir selecciones                            |
+| DELIVERABLES      | definir, preparar, entregar y aprobar entregables                       |
+| INVITATIONS       | diseñar, publicar, distribuir y registrar confirmaciones                |
+| CMS               | administrar y publicar contenido autorizado                             |
+| NOTIFICATIONS     | solicitar, consultar y reintentar comunicaciones                        |
+| SETTINGS          | consultar y cambiar configuración permitida                             |
+| AUTOMATION        | definir, activar y observar reglas automáticas                          |
+| ANALYTICS         | consultar métricas y reportes autorizados                               |
+| STORAGE           | operaciones internas de objetos mediante StorageProvider                |
+| AUDIT             | consultar evidencia bajo permiso restringido                            |
+| SYSTEM            | salud, versión, diagnóstico y configuración efectiva segura             |
 
 BACKOFFICE y CLIENT PORTAL consumen estas capacidades; no ofrecen APIs de dominio alternativas.
 
@@ -731,24 +731,24 @@ Una etapa no exige finalizar todo el alcance imaginable de la anterior. Exige qu
 
 ## 15. Riesgos arquitectónicos
 
-| Riesgo | Consecuencia | Prevención |
-|---|---|---|
-| Event se convierte en objeto gigante | Alto acoplamiento y cambios peligrosos | Ownership por módulo y referencias por EventId |
-| Duplicación de personas | Contratos, pagos y portal inconsistentes | PEOPLE como fuente única de identidad |
-| Acceso cruzado a tablas | Dependencias invisibles y ciclos | APIs internas, eventos y revisiones arquitectónicas |
-| BackOffice contiene reglas | Backend y UI divergen | Reglas exclusivamente en módulos propietarios |
-| Client tratado como entidad universal | Modelo incapaz de representar múltiples roles | Client como rol contextual de People/CRM |
-| Storage acoplado a proveedor | Migración costosa y vendor lock-in | StorageProvider y STORAGE sin semántica de negocio |
-| Media y Gallery confundidos | Duplicación de archivos y estados | MEDIA posee activos; GALLERY posee curaduría |
-| Timeline como fuente de verdad | Datos duplicados y divergentes | Proyección derivada con referencias de origen |
-| Automatizaciones con acceso privilegiado | Saltos de reglas y daños masivos | Comandos públicos, permisos e idempotencia |
-| Eventos de dominio sin gobierno | Contratos frágiles y consumidores rotos | Catálogo, versionado y ownership de publicación |
-| Analítica sobre base operacional | Degradación y acoplamiento | Proyecciones regenerables y consultas controladas |
-| Permisos solo por rol | Fugas entre Events o participantes | Permiso más scope y validación del propietario |
-| Exposición de medios privados | Riesgo legal y reputacional | Visibilidad explícita, URLs temporales y auditoría |
-| Plantillas retroactivas | Events históricos cambian inesperadamente | Copia y versión al instanciar |
-| Borrado indiscriminado | Pérdida de evidencia | Retención, archivo y eliminación restringida |
-| Roadmap guiado por pantallas | Dominios incoherentes | Construir ownership y capacidades antes de experiencias |
+| Riesgo                                   | Consecuencia                                  | Prevención                                              |
+| ---------------------------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Event se convierte en objeto gigante     | Alto acoplamiento y cambios peligrosos        | Ownership por módulo y referencias por EventId          |
+| Duplicación de personas                  | Contratos, pagos y portal inconsistentes      | PEOPLE como fuente única de identidad                   |
+| Acceso cruzado a tablas                  | Dependencias invisibles y ciclos              | APIs internas, eventos y revisiones arquitectónicas     |
+| BackOffice contiene reglas               | Backend y UI divergen                         | Reglas exclusivamente en módulos propietarios           |
+| Client tratado como entidad universal    | Modelo incapaz de representar múltiples roles | Client como rol contextual de People/CRM                |
+| Storage acoplado a proveedor             | Migración costosa y vendor lock-in            | StorageProvider y STORAGE sin semántica de negocio      |
+| Media y Gallery confundidos              | Duplicación de archivos y estados             | MEDIA posee activos; GALLERY posee curaduría            |
+| Timeline como fuente de verdad           | Datos duplicados y divergentes                | Proyección derivada con referencias de origen           |
+| Automatizaciones con acceso privilegiado | Saltos de reglas y daños masivos              | Comandos públicos, permisos e idempotencia              |
+| Eventos de dominio sin gobierno          | Contratos frágiles y consumidores rotos       | Catálogo, versionado y ownership de publicación         |
+| Analítica sobre base operacional         | Degradación y acoplamiento                    | Proyecciones regenerables y consultas controladas       |
+| Permisos solo por rol                    | Fugas entre Events o participantes            | Permiso más scope y validación del propietario          |
+| Exposición de medios privados            | Riesgo legal y reputacional                   | Visibilidad explícita, URLs temporales y auditoría      |
+| Plantillas retroactivas                  | Events históricos cambian inesperadamente     | Copia y versión al instanciar                           |
+| Borrado indiscriminado                   | Pérdida de evidencia                          | Retención, archivo y eliminación restringida            |
+| Roadmap guiado por pantallas             | Dominios incoherentes                         | Construir ownership y capacidades antes de experiencias |
 
 ---
 

@@ -528,38 +528,38 @@ Puede depender de application y public. No accede directamente a Prisma ni imple
 
 ## 8. Ubicación oficial por tipo de elemento
 
-| Elemento | Ubicación |
-|---|---|
-| Controller | `modules/<module>/presentation/http/controllers/` |
-| DTO HTTP | `modules/<module>/presentation/http/dto/` |
-| Command y handler | `modules/<module>/application/commands/<use-case>/` |
-| Query y handler | `modules/<module>/application/queries/<use-case>/` |
-| Application service | `modules/<module>/application/services/` |
-| Domain entity | `modules/<module>/domain/entities/` |
-| Value Object | `modules/<module>/domain/value-objects/` |
-| Domain service | `modules/<module>/domain/services/` |
-| Domain policy | `modules/<module>/domain/policies/` |
-| Domain error | `modules/<module>/domain/errors/` |
-| Domain Event interno | `modules/<module>/domain/events/` |
-| Evento público | `modules/<module>/public/events/` |
-| Repository port | `modules/<module>/application/ports/outbound/` |
-| Repository Prisma | `modules/<module>/infrastructure/persistence/prisma/repositories/` |
-| Persistence mapper | `modules/<module>/infrastructure/persistence/prisma/mappers/` |
-| Application mapper | `modules/<module>/application/mappers/` |
-| Validator de DTO | Junto al DTO o en `presentation/http/validators/` |
-| Regla de dominio | Entity, Value Object o `domain/policies/` |
-| Guard específico | `presentation/http/guards/` del módulo |
-| Guard global | `platform/http/guards/` o `platform/security/` |
-| Decorator específico | `presentation/http/decorators/` del módulo |
-| Decorator global | `platform/http/decorators/` |
-| Pipe específico | `presentation/http/pipes/` del módulo |
-| Pipe global | `platform/http/pipes/` |
-| Interceptor específico | `presentation/http/interceptors/` |
-| Interceptor global | `platform/http/interceptors/` |
-| Exception filter global | `platform/http/filters/` |
-| Configuración | `config/` |
-| Adapter técnico compartido | `platform/<capability>/` |
-| Tipo realmente universal | `shared/types/` |
+| Elemento                   | Ubicación                                                          |
+| -------------------------- | ------------------------------------------------------------------ |
+| Controller                 | `modules/<module>/presentation/http/controllers/`                  |
+| DTO HTTP                   | `modules/<module>/presentation/http/dto/`                          |
+| Command y handler          | `modules/<module>/application/commands/<use-case>/`                |
+| Query y handler            | `modules/<module>/application/queries/<use-case>/`                 |
+| Application service        | `modules/<module>/application/services/`                           |
+| Domain entity              | `modules/<module>/domain/entities/`                                |
+| Value Object               | `modules/<module>/domain/value-objects/`                           |
+| Domain service             | `modules/<module>/domain/services/`                                |
+| Domain policy              | `modules/<module>/domain/policies/`                                |
+| Domain error               | `modules/<module>/domain/errors/`                                  |
+| Domain Event interno       | `modules/<module>/domain/events/`                                  |
+| Evento público             | `modules/<module>/public/events/`                                  |
+| Repository port            | `modules/<module>/application/ports/outbound/`                     |
+| Repository Prisma          | `modules/<module>/infrastructure/persistence/prisma/repositories/` |
+| Persistence mapper         | `modules/<module>/infrastructure/persistence/prisma/mappers/`      |
+| Application mapper         | `modules/<module>/application/mappers/`                            |
+| Validator de DTO           | Junto al DTO o en `presentation/http/validators/`                  |
+| Regla de dominio           | Entity, Value Object o `domain/policies/`                          |
+| Guard específico           | `presentation/http/guards/` del módulo                             |
+| Guard global               | `platform/http/guards/` o `platform/security/`                     |
+| Decorator específico       | `presentation/http/decorators/` del módulo                         |
+| Decorator global           | `platform/http/decorators/`                                        |
+| Pipe específico            | `presentation/http/pipes/` del módulo                              |
+| Pipe global                | `platform/http/pipes/`                                             |
+| Interceptor específico     | `presentation/http/interceptors/`                                  |
+| Interceptor global         | `platform/http/interceptors/`                                      |
+| Exception filter global    | `platform/http/filters/`                                           |
+| Configuración              | `config/`                                                          |
+| Adapter técnico compartido | `platform/<capability>/`                                           |
+| Tipo realmente universal   | `shared/types/`                                                    |
 
 Una ubicación específica prevalece sobre una carpeta compartida. No se mueve algo a `shared/` solo para acortar imports.
 
@@ -705,21 +705,21 @@ Se reserva para inicialización local imprescindible, por ejemplo extensiones ap
 
 Cada archivo de `src/config/` representa una capacidad concreta:
 
-| Archivo | Responsabilidad |
-|---|---|
-| `app.config.ts` | Puerto, prefijo, entorno y metadatos generales |
-| `auth.config.ts` | JWT HS256 inicial, sesiones y expiraciones |
-| `cors.config.ts` | Orígenes, métodos y credenciales |
-| `database.config.ts` | Conexión, pool y timeouts |
-| `logging.config.ts` | Nivel, formato y redacción |
-| `rate-limit.config.ts` | Políticas globales predeterminadas |
-| `swagger.config.ts` | Activación y metadatos OpenAPI |
-| `storage.config.ts` | Provider seleccionado y parámetros no secretos |
-| `mail.config.ts` | Remitente y adapter seleccionado |
-| `upload.config.ts` | Límites, tipos y expiraciones de carga |
-| `image.config.ts` | Políticas de procesamiento de imagen |
-| `ffmpeg.config.ts` | Disponibilidad, rutas y límites de FFmpeg |
-| `env.schema.ts` | Validación central de variables |
+| Archivo                | Responsabilidad                                |
+| ---------------------- | ---------------------------------------------- |
+| `app.config.ts`        | Puerto, prefijo, entorno y metadatos generales |
+| `auth.config.ts`       | JWT HS256 inicial, sesiones y expiraciones     |
+| `cors.config.ts`       | Orígenes, métodos y credenciales               |
+| `database.config.ts`   | Conexión, pool y timeouts                      |
+| `logging.config.ts`    | Nivel, formato y redacción                     |
+| `rate-limit.config.ts` | Políticas globales predeterminadas             |
+| `swagger.config.ts`    | Activación y metadatos OpenAPI                 |
+| `storage.config.ts`    | Provider seleccionado y parámetros no secretos |
+| `mail.config.ts`       | Remitente y adapter seleccionado               |
+| `upload.config.ts`     | Límites, tipos y expiraciones de carga         |
+| `image.config.ts`      | Políticas de procesamiento de imagen           |
+| `ffmpeg.config.ts`     | Disponibilidad, rutas y límites de FFmpeg      |
+| `env.schema.ts`        | Validación central de variables                |
 
 ### Reglas
 
@@ -839,25 +839,25 @@ Viven en `tests/contracts/` y validan:
 - Un concepto principal por archivo.
 - El nombre del archivo describe el símbolo principal.
 
-| Elemento | Convención | Ejemplo |
-|---|---|---|
-| Nest module | `<module>.module.ts` | `events.module.ts` |
-| Controller | `<resource>.controller.ts` | `events.controller.ts` |
-| DTO | `<action>.dto.ts` | `create-event.dto.ts` |
-| Command | `<action>.command.ts` | `create-event.command.ts` |
-| Command handler | `<action>.handler.ts` | `create-event.handler.ts` |
-| Query | `<action>.query.ts` | `get-event.query.ts` |
-| Entity | `<entity>.entity.ts` | `event.entity.ts` |
-| Value Object | `<concept>.value-object.ts` | `event-code.value-object.ts` |
-| Domain Event | `<fact>.event.ts` | `event-created.event.ts` |
-| Repository port | `<entity>.repository.ts` | `event.repository.ts` |
-| Prisma repository | `prisma-<entity>.repository.ts` | `prisma-event.repository.ts` |
-| Mapper | `<source>-<target>.mapper.ts` | `event-persistence.mapper.ts` |
-| Policy | `<rule>.policy.ts` | `event-activation.policy.ts` |
-| Guard | `<purpose>.guard.ts` | `event-access.guard.ts` |
-| Decorator | `<purpose>.decorator.ts` | `current-user.decorator.ts` |
-| Filter | `<purpose>.filter.ts` | `global-exception.filter.ts` |
-| Interceptor | `<purpose>.interceptor.ts` | `request-context.interceptor.ts` |
+| Elemento          | Convención                      | Ejemplo                          |
+| ----------------- | ------------------------------- | -------------------------------- |
+| Nest module       | `<module>.module.ts`            | `events.module.ts`               |
+| Controller        | `<resource>.controller.ts`      | `events.controller.ts`           |
+| DTO               | `<action>.dto.ts`               | `create-event.dto.ts`            |
+| Command           | `<action>.command.ts`           | `create-event.command.ts`        |
+| Command handler   | `<action>.handler.ts`           | `create-event.handler.ts`        |
+| Query             | `<action>.query.ts`             | `get-event.query.ts`             |
+| Entity            | `<entity>.entity.ts`            | `event.entity.ts`                |
+| Value Object      | `<concept>.value-object.ts`     | `event-code.value-object.ts`     |
+| Domain Event      | `<fact>.event.ts`               | `event-created.event.ts`         |
+| Repository port   | `<entity>.repository.ts`        | `event.repository.ts`            |
+| Prisma repository | `prisma-<entity>.repository.ts` | `prisma-event.repository.ts`     |
+| Mapper            | `<source>-<target>.mapper.ts`   | `event-persistence.mapper.ts`    |
+| Policy            | `<rule>.policy.ts`              | `event-activation.policy.ts`     |
+| Guard             | `<purpose>.guard.ts`            | `event-access.guard.ts`          |
+| Decorator         | `<purpose>.decorator.ts`        | `current-user.decorator.ts`      |
+| Filter            | `<purpose>.filter.ts`           | `global-exception.filter.ts`     |
+| Interceptor       | `<purpose>.interceptor.ts`      | `request-context.interceptor.ts` |
 
 ### 15.2 Clases e interfaces
 
@@ -882,15 +882,15 @@ El código y contratos técnicos utilizarán inglés para coincidir con el Ubiqu
 
 ### Aliases
 
-| Alias | Destino |
-|---|---|
-| `@app/*` | `src/*` |
-| `@config/*` | `src/config/*` |
-| `@modules/*` | `src/modules/*` |
-| `@platform/*` | `src/platform/*` |
-| `@shared/*` | `src/shared/*` |
-| `@generated/*` | `src/generated/*` |
-| `@test/*` | `tests/*`, solo configuración de tests |
+| Alias          | Destino                                |
+| -------------- | -------------------------------------- |
+| `@app/*`       | `src/*`                                |
+| `@config/*`    | `src/config/*`                         |
+| `@modules/*`   | `src/modules/*`                        |
+| `@platform/*`  | `src/platform/*`                       |
+| `@shared/*`    | `src/shared/*`                         |
+| `@generated/*` | `src/generated/*`                      |
+| `@test/*`      | `tests/*`, solo configuración de tests |
 
 ### Reglas de import
 
@@ -981,20 +981,20 @@ No se adoptará solo para anticipar un futuro posible.
 
 ## 20. Riesgos estructurales
 
-| Riesgo | Prevención |
-|---|---|
-| `shared/` se convierte en misc | Criterios de admisión y dependencias unidireccionales |
-| Capas vacías y exceso de archivos | Carpetas opcionales y regla de proporcionalidad |
-| Imports internos entre módulos | Superficie `public/`, ESLint y pruebas arquitectónicas |
-| Reglas en controllers | Controllers delgados; comandos y casos de uso en application |
-| Dominio acoplado a Prisma | Mappers y repositorios en infrastructure |
-| DTO usado como entidad | Separación entre presentation, application y domain |
-| Migraciones divididas por módulo | Historia central cronológica |
-| Seeders no idempotentes | Orquestador, orden y upserts controlados |
-| Documentación duplicada | Jerarquía documental y ADR canónico en Blueprint |
-| Unit tests difíciles de encontrar | Co-localización con el código probado |
-| Monorepo prematuro | Una sola aplicación en modo estándar |
-| Configuración mezclada con providers | `config/` describe; `platform/` instancia |
+| Riesgo                               | Prevención                                                   |
+| ------------------------------------ | ------------------------------------------------------------ |
+| `shared/` se convierte en misc       | Criterios de admisión y dependencias unidireccionales        |
+| Capas vacías y exceso de archivos    | Carpetas opcionales y regla de proporcionalidad              |
+| Imports internos entre módulos       | Superficie `public/`, ESLint y pruebas arquitectónicas       |
+| Reglas en controllers                | Controllers delgados; comandos y casos de uso en application |
+| Dominio acoplado a Prisma            | Mappers y repositorios en infrastructure                     |
+| DTO usado como entidad               | Separación entre presentation, application y domain          |
+| Migraciones divididas por módulo     | Historia central cronológica                                 |
+| Seeders no idempotentes              | Orquestador, orden y upserts controlados                     |
+| Documentación duplicada              | Jerarquía documental y ADR canónico en Blueprint             |
+| Unit tests difíciles de encontrar    | Co-localización con el código probado                        |
+| Monorepo prematuro                   | Una sola aplicación en modo estándar                         |
+| Configuración mezclada con providers | `config/` describe; `platform/` instancia                    |
 
 ---
 
