@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: production
+    env_file:
+      - ../.env.production
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
